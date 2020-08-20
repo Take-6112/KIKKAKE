@@ -5,11 +5,8 @@ import sqlite3
 #appっていう名前でFlaskアプリをつくっていくよ～みたいな
 app = KIKKAKE(__name__)
 
-#シークレットキー設定（sssionが使えるようになる！）
+#シークレットキー設定（sesionが使えるようになる！）
 app.secret_key = "sunabaco"
-
-
-
 
 # /pege_1 と入れる pege_1.htmlにとぶ
 @app.route("/pege_1)
@@ -123,18 +120,16 @@ def dbtest():
 #     else:
 #         return redirect("/login")
 
-# # 削除機能
-# @app.route("/del/<int:id>")
-# def del_task(id):
-#     if "user_id" in session:
-#         conn = sqlite3.connect("task_list.db")
-#         c = conn.cursor()
-#         c.execute("DELETE FROM task where id = ?",(id,))
-#         conn.commit()
-#         conn.close()
-#         return redirect("/list")
-#     else:
-#         return redirect("/login")
+# 削除機能
+@app.route("/del/<int:id>")
+def del_post(id):
+    if "id" in session:
+        conn = sqlite3.connect("k_post.db")
+        c = conn.cursor()
+        c.execute("DELETE FROM task where id = ?",(id,))
+        conn.commit()
+        conn.close()
+        return render_template("/index.html")
 
 # # ユーザー登録機能
 # @app.route("/regist")
@@ -151,34 +146,6 @@ def dbtest():
 #     conn.commit()
 #     c.close()
 #     return redirect("/list")
-
-# # ログイン機能
-# @app.route("/login")
-# def login_get():
-#     if "user_id" in session :
-#         return redirect("/list")
-#     else:
-#         return render_template("login.html")
-
-# @app.route("/login" , methods=["POST"])
-# def login_post():
-#     name = request.form.get("name")
-#     password = request.form.get("password")
-#     conn = sqlite3.connect("task_list.db")
-#     c = conn.cursor()
-#     c.execute("SELECT id FROM users where name = ? AND password = ?",(name,password))
-#     user_id = c.fetchone()
-#     c.close()
-#     if user_id is None:
-#         return render_template("login.html")
-#     else:
-#         session["user_id"] = user_id[0]
-#         return redirect("/list")
-
-# @app.route("/logout")
-# def logout():
-#     session.pop("user_id",None)
-#     return redirect("/login")
 
 if __name__ == "__main__":
     # Flask が持っている開発用サーバーを、実行します。
