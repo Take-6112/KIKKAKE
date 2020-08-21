@@ -3,10 +3,16 @@ from flask import Flask,render_template,request,redirect,session
 import sqlite3
 
 #appっていう名前でFlaskアプリをつくっていくよ～みたいな
-app = KIKKAKE(__name__)
+app = Flask(__name__)
 
 #シークレットキー設定（sesionが使えるようになる！）
-app.secret_key = "sunabaco"
+app.secret_key = "kikkake"
+
+from datetime import datetime
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 # /pege_1 と入れる pege_1.htmlにとぶ
 @app.route("/pege_1)
@@ -28,124 +34,117 @@ def page_3():
 def page_4():
     return render_template("pege_4.html")
 
-# dbに接続！
-@app.route("/db")
-def dbtest():
-    conn = sqlite3.connect("k_post.db")
-    c = conn.cursor()
-
-
-# # リスト
-# @app.route("/list")
-# def post_list():
-#     if "id" in session:
-#         id = session["id"]
-#         conn = sqlite3.connect("k_post.db")
-#         c = conn.cursor()
-#         c.execute("SELECT id FROM users where id = ?",(user_id,))
-#         user_
-#          = c.fetchone()[0]
-#         c.execute("SELECT * FROM task where user_id = ?",(user_id,))
-#         task_list = []
-#         for row in c.fetchall():
-#             task_list.append({"id":row[0],"task":row[1],"limit":row[2]})
-#         c.close()
-#         print(task_list)
-#         return render_template("tasklist.html" , task_list = task_list , user_name = user_name )
-#     else:
-#         return redirect("/login")
-
-
-# # 追加機能
-# @app.route("/add" , methods=["GET"])
-# def add_get():
-#     return render_template("add.html")
-
-# @app.route("/add" , methods=["POST"])
-# def add_post():
-#     if "user_id" in session:
-#         user_id = session["user_id"]
-#         task = request.form.get("task")
-#         limit = request.form.get("limit")
-#         print(task)
-#         conn = sqlite3.connect("task_list.db")
-#         c = conn.cursor()
-#         c.execute("INSERT INTO task VALUES(NULL,?,?,?)",(task,limit,user_id))
-#         conn.commit()
-#         c.close()
-#         return redirect("/list")
-#     else:
-#         return redirect("/login")
-
-# @app.errorhandler(404)
-# def page_not_found(error):
-#     return render_template('page_not_found.html'), 404
-
-# # 編集機能(フォーム表示)
-# @app.route("/edit/<int:id>")
-# def edit(id):
-#     if "user_id" in session:
-#         conn = sqlite3.connect("k_post.db")
-#         c = conn.cursor()
-#         c.execute("SELECT task,limit_task,user_id FROM task where id = ?",(id,))
-#         task = c.fetchone()
-#         conn.close()
-#         print(task)
-#         if task is not None:
-#             task_name = task[0]
-#             limit =task[1]
-#             user_id =task[2]
-#         else:
-#             return "アイテムがありません"
-
-#         item = {"id":id,"task":task_name,"limit":limit,"user_id":user_id}
-#         return render_template("edit.html",task = item)
-#     else:
-#         return redirect("/login")
-
-# # 編集機能（書き換え）
-# @app.route("/edit" , methods=["POST"])
-# def update_task():
-#     if "user_id" in session:
-#         task = request.form.get("task")
-#         limit = request.form.get("limit")
-#         task_id = request.form.get("task_id")
-#         print(task)
-#         conn = sqlite3.connect("task_list.db")
-#         c = conn.cursor()
-#         c.execute("UPDATE task SET task = ?,limit_task = ? where id = ?",(task,limit,task_id))
-#         conn.commit()
-#         c.close()
-#         return redirect("/list")
-#     else:
-#         return redirect("/login")
-
-# 削除機能
-@app.route("/del/<int:id>")
-def del_post(id):
-    if "id" in session:
-        conn = sqlite3.connect("k_post.db")
+@app.route('/bbs')
+def bbs():
+    if 'user_id' in session :
+        user_id = session['user_id']
+        conn = sqlite3.connect('k_post.db')
         c = conn.cursor()
-        c.execute("DELETE FROM task where id = ?",(id,))
+        # # DBにアクセスしてログインしているユーザ名と投稿内容を取得する
+        # クッキーから取得したuser_idを使用してuserテーブルのnameを取得
+        c.execute("select id from user where id = ?", (user_id,))
+        # fetchoneはタプル型
+        user_info = c.fetchone()
+        # user_infoの中身を確認
+        # 保存されているtimeも表示する
+        c.execute("select id,comment,time from bbs where userid = ? and del_flag = 0 order by id", (user_id,))
+        comment_list = []
+        for row in c.fetchall():
+            comment_list.append({"id": row[0], "comment": row[1], "time":row[2]})
+
+        c.close()
+        return render_template('bbs.html' , user_info = user_info , comment_list = comment_list)
+    else:
+        return redirect("/bbs")
+
+
+
+@app.route('/add', methods=["POST"])
+def add():
+    user_id = session['user_id']
+    # 現在時刻を取得
+    time = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+    # POSTアクセスならDBに登録する
+    # フォームから入力されたアイテム名の取得
+    comment = request.form.get("comment")
+    conn = sqlite3.connect('k_post.db')
+    c = conn.cursor()
+    # 現在の最大ID取得(fetchoneの戻り値はタプル)
+
+    # null,?,?,0の0はdel_flagのデフォルト値
+    # timeを新たにinsert
+    c.execute("insert into bbs values(null,?,?,0,?)", (user_id, comment,time))
+    conn.commit()
+    conn.close()
+    return redirect('/bbs')
+
+@app.route('/edit/<int:id>')
+def edit(id):
+    if 'user_id' in session :
+        conn = sqlite3.connect('k_post.db')
+        c = conn.cursor()
+        c.execute("select comment from bbs where id = ?", (id,) )
+        comment = c.fetchone()
+        conn.close()
+
+        if comment is not None:
+            # None に対しては インデクス指定できないので None 判定した後にインデックスを指定
+            comment = comment[0] # "りんご" ○   ("りんご",) ☓
+            # fetchone()で取り出したtupleに 0 を指定することで テキストだけをとりだす
+        else:
+            return "アイテムがありません" # 指定したIDの name がなければときの対処
+
+        item = { "id":id, "comment":comment }
+
+        return render_template("edit.html", comment=item)
+    else:
+        return redirect("/")
+
+
+# /add ではPOSTを使ったので /edit ではあえてGETを使う
+@app.route("/edit")
+def update_item():
+    if 'user_id' in session :
+        # ブラウザから送られてきたデータを取得
+        item_id = request.args.get("item_id") # id
+        print(item_id)
+        item_id = int(item_id) # ブラウザから送られてきたのは文字列なので整数に変換する
+        comment = request.args.get("comment") # 編集されたテキストを取得する
+
+        # 既にあるデータベースのデータを送られてきたデータに更新
+        conn = sqlite3.connect('k_post.db')
+        c = conn.cursor()
+        c.execute("update bbs set comment = ? where id = ?",(comment,item_id))
         conn.commit()
         conn.close()
-        return render_template("/index.html")
 
-# # ユーザー登録機能
-# @app.route("/regist")
-# def regist_get():
-#     return render_template("regist.html")
+        # アイテム一覧へリダイレクトさせる
+        return redirect("/bbs")
+    else:
+        return redirect("/login")
 
-# @app.route("/regist" , methods=["POST"])
-# def regis_post():
-#     name = request.form.get("name")
-#     password = request.form.get("password")
-#     conn = sqlite3.connect("task_list.db")
-#     c = conn.cursor()
-#     c.execute("INSERT INTO users VALUES(NULL,?,?)",(name,password))
-#     conn.commit()
-#     c.close()
-#     return redirect("/list")
+@app.route('/del' , methods=["POST"])
+def del_task():
+    id = request.form.get("comment_id")
+    id = int(id)
+    conn = sqlite3.connect('k_post.db')
+    c = conn.cursor()
+    # 指定されたitem_idを元にDBデータを削除せずにdel_flagを1にして一覧からは表示しないようにする
+    # 課題1の答えはここ del_flagを1にupdateする
+    c.execute("update bbs set del_flag = 1 where id=?", (id,))
+    conn.commit()
+    conn.close()
+    # 処理終了後に一覧画面に戻す
+    return redirect("/bbs")
+
+@app.errorhandler(403)
+def mistake403(code):
+    return 'There is a mistake in your url!'
+
+
+@app.errorhandler(404)
+def notfound(code):
+    return "sorry... 404"
 
 if __name__ == "__main__":
     # Flask が持っている開発用サーバーを、実行します。
