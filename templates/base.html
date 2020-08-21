@@ -5,12 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>KIKKAKE</title>
+
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
 </head>
 <body>
     <!-- <h1>ここがヘッダーだよ！</h1> -->
+    <header>
+        <div class="container">
+            <div class="header_left">
+                <a href="http://" class="header_logo_link">KIKKAKE</a>
+                <p class="header_logo_title">～ 伝えたいことば ～</p>
+            </div>
+
+            <div class="header_right">
+                <div class="header_home">
+
+                </div>
+
+                <div class="header_search">
+                    <div class="nav_bar_left"></div>
+                    <form action="#" class="nav_searchbar" method="get" name="site_search" role="search"></form>
+                </div>
+
+                <div id="header_btn">
+                    <a href="#" class="btn twitter"><span class="fa fa-twitter"></span></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
     {% block main %}
     <!-- ここにメインコンテンツを書く -->
     {% endblock %}
     <!-- <h2>ここがフッターだよ！</h2> -->
+    <footer>
+        <div class="container">
+            <p class="footer_text">お問い合わせはこちらから</p>
+            <div class="footer_btn">
+                <a href="#" class="btn twitter"><span class="fa fa-twitter"></span></a>
+            </div>
+            <p>Copyright © KIKKAKE. All Rights Reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
