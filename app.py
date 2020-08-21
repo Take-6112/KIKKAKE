@@ -12,7 +12,7 @@ from datetime import datetime
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('concept.html')
 
 # /pege_1 と入れる pege_1.htmlにとぶ
 @app.route("/pege_1)
