@@ -1,0 +1,151 @@
+# Flaskからimportしてflaskを使えるようにする
+from flask import Flask,render_template,request,redirect,session
+import sqlite3
+
+#appっていう名前でFlaskアプリをつくっていくよ～みたいな
+app = Flask(__name__)
+
+#シークレットキー設定（sesionが使えるようになる！）
+app.secret_key = "kikkake"
+
+from datetime import datetime
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+# /pege_1 と入れる pege_1.htmlにとぶ
+@app.route("/pege_1)
+def page_1():
+    return render_template("pege_1.html")
+
+# /pege_2 と入れる pege_2.htmlにとぶ
+@app.route("/pege_2")
+def page_2():
+    return render_template("pege_2.html")
+
+# /pege_3 と入れる pege_3.htmlにとぶ
+@app.route("/pege_3")
+def page_3():
+    return render_template("pege_3.html")
+
+# /pege_4 と入れる pege_4.htmlにとぶ
+@app.route("/pege_4")
+def page_4():
+    return render_template("pege_4.html")
+
+@app.route('/bbs')
+def bbs():
+    if 'user_id' in session :
+        user_id = session['user_id']
+        conn = sqlite3.connect('k_post.db')
+        c = conn.cursor()
+        # # DBにアクセスしてログインしているユーザ名と投稿内容を取得する
+        # クッキーから取得したuser_idを使用してuserテーブルのnameを取得
+        c.execute("select id from user where id = ?", (user_id,))
+        # fetchoneはタプル型
+        user_info = c.fetchone()
+        # user_infoの中身を確認
+        # 保存されているtimeも表示する
+        c.execute("select id,comment,time from bbs where userid = ? and del_flag = 0 order by id", (user_id,))
+        comment_list = []
+        for row in c.fetchall():
+            comment_list.append({"id": row[0], "comment": row[1], "time":row[2]})
+
+        c.close()
+        return render_template('bbs.html' , user_info = user_info , comment_list = comment_list)
+    else:
+        return redirect("/bbs")
+
+
+
+@app.route('/add', methods=["POST"])
+def add():
+    user_id = session['user_id']
+    # 現在時刻を取得
+    time = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+    # POSTアクセスならDBに登録する
+    # フォームから入力されたアイテム名の取得
+    comment = request.form.get("comment")
+    conn = sqlite3.connect('k_post.db')
+    c = conn.cursor()
+    # 現在の最大ID取得(fetchoneの戻り値はタプル)
+
+    # null,?,?,0の0はdel_flagのデフォルト値
+    # timeを新たにinsert
+    c.execute("insert into bbs values(null,?,?,0,?)", (user_id, comment,time))
+    conn.commit()
+    conn.close()
+    return redirect('/bbs')
+
+@app.route('/edit/<int:id>')
+def edit(id):
+    if 'user_id' in session :
+        conn = sqlite3.connect('k_post.db')
+        c = conn.cursor()
+        c.execute("select comment from bbs where id = ?", (id,) )
+        comment = c.fetchone()
+        conn.close()
+
+        if comment is not None:
+            # None に対しては インデクス指定できないので None 判定した後にインデックスを指定
+            comment = comment[0] # "りんご" ○   ("りんご",) ☓
+            # fetchone()で取り出したtupleに 0 を指定することで テキストだけをとりだす
+        else:
+            return "アイテムがありません" # 指定したIDの name がなければときの対処
+
+        item = { "id":id, "comment":comment }
+
+        return render_template("edit.html", comment=item)
+    else:
+        return redirect("/")
+
+
+# /add ではPOSTを使ったので /edit ではあえてGETを使う
+@app.route("/edit")
+def update_item():
+    if 'user_id' in session :
+        # ブラウザから送られてきたデータを取得
+        item_id = request.args.get("item_id") # id
+        print(item_id)
+        item_id = int(item_id) # ブラウザから送られてきたのは文字列なので整数に変換する
+        comment = request.args.get("comment") # 編集されたテキストを取得する
+
+        # 既にあるデータベースのデータを送られてきたデータに更新
+        conn = sqlite3.connect('k_post.db')
+        c = conn.cursor()
+        c.execute("update bbs set comment = ? where id = ?",(comment,item_id))
+        conn.commit()
+        conn.close()
+
+        # アイテム一覧へリダイレクトさせる
+        return redirect("/bbs")
+    else:
+        return redirect("/login")
+
+@app.route('/del' , methods=["POST"])
+def del_task():
+    id = request.form.get("comment_id")
+    id = int(id)
+    conn = sqlite3.connect('k_post.db')
+    c = conn.cursor()
+    # 指定されたitem_idを元にDBデータを削除せずにdel_flagを1にして一覧からは表示しないようにする
+    # 課題1の答えはここ del_flagを1にupdateする
+    c.execute("update bbs set del_flag = 1 where id=?", (id,))
+    conn.commit()
+    conn.close()
+    # 処理終了後に一覧画面に戻す
+    return redirect("/bbs")
+
+@app.errorhandler(403)
+def mistake403(code):
+    return 'There is a mistake in your url!'
+
+
+@app.errorhandler(404)
+def notfound(code):
+    return "sorry... 404"
+
+if __name__ == "__main__":
+    # Flask が持っている開発用サーバーを、実行します。
+    app.run(debug=True)

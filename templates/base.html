@@ -4,13 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Flask lesson</title>
+    <title>KIKKAKE</title>
+
+
+    <link rel="stylesheet" href="../static/CSS/kikkake.css">
+    <link rel="stylesheet" href="../static/CSS/kikkake_sp.css">
+    <link href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" rel="stylesheet">
+
 </head>
 <body>
     <!-- <h1>ここがヘッダーだよ！</h1> -->
+    <header>
+        <div class="container">
+            <div class="header_left">
+                <img src="">
+                <a href="http://" class="header_logo_link">KIKKAKE</a>
+                <p class="header_logo_title">～ 伝えたいことば ～</p>
+            </div>
+
+            <div class="header_right">
+                <div class="header_home">
+                    <a href="#" class="btn home"><span class="fas fa-home"></span></a>
+                </div>
+
+                <div class="header_search">
+                    <div class="nav_bar_left"></div>
+                    <form action="#" class="nav_searchbar" method="get" name="site_search" role="search"></form>
+                </div>
+
+                <div id="header_btn">
+                    <a href="#" class="btn twitter"><span class="fab fa-twitter-square"></span></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
     {% block main %}
     <!-- ここにメインコンテンツを書く -->
     {% endblock %}
     <!-- <h2>ここがフッターだよ！</h2> -->
+    <footer>
+        <div class="container">
+            <p class="footer_text">お問い合わせはこちらから</p>
+            <div id="footer_btn">
+                <a href="#" class="btn twitter"><span class="fab fa-twitter-square"></span></a>
+            </div>
+            <p>Copyright © KIKKAKE. All Rights Reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
