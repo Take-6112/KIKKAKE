@@ -38,6 +38,29 @@ def page_3():
 def page_4():
     return render_template("page_4.html")
 
+@app.route('/bbs')
+def bbs():
+    if 'user_id' in session :
+        user_id = session['user_id']
+        conn = sqlite3.connect('k_post.db')
+        c = conn.cursor()
+        # # DBにアクセスしてログインしているユーザ名と投稿内容を取得する
+        # クッキーから取得したuser_idを使用してuserテーブルのnameを取得
+        c.execute("select id from user where id = ?", (user_id,))
+        # fetchoneはタプル型
+        user_info = c.fetchone()
+        # user_infoの中身を確認
+        # 保存されているtimeも表示する
+        c.execute("select id,content,time from k_posts where userid = ? and del_flag = 0 order by id", (user_id,))
+        content_list = []
+        for row in c.fetchall():
+            content_list.append({"id": row[0], "content": row[1], "time":row[2]})
+
+        c.close()
+        return render_template('bbs.html' , user_info = user_info , content_list = content_list)
+    else:
+        return redirect("/bbs")
+
 @app.route('/add', methods=["POST"])
 def add():
     user_id = session['user_id']
@@ -110,7 +133,7 @@ def del_task():
     c = conn.cursor()
     # 指定されたitem_idを元にDBデータを削除せずにdel_flagを1にして一覧からは表示しないようにする
     # 課題1の答えはここ del_flagを1にupdateする
-    c.execute("update bbs set del_flag = 1 where id=?", (id,))
+    c.execute("update k_posts set del_flag = 1 where id=?", (id,))
     conn.commit()
     conn.close()
     # 処理終了後に一覧画面に戻す
