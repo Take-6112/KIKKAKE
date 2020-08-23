@@ -154,7 +154,7 @@ def edit(id):
         conn = sqlite3.connect('k_post.db')
         c = conn.cursor()
         c.execute("select comment from k_posts where id = ?", (id,) )
-        content = c.fetchone()
+        comment = c.fetchone()
         conn.close()
 
         if comment is not None:
@@ -179,7 +179,7 @@ def update_item():
         item_id = request.args.get("item_id") # id
         print(item_id)
         item_id = int(item_id) # ブラウザから送られてきたのは文字列なので整数に変換する
-        content = request.args.get("comment") # 編集されたテキストを取得する
+        comment = request.args.get("comment") # 編集されたテキストを取得する
 
         # 既にあるデータベースのデータを送られてきたデータに更新
         conn = sqlite3.connect('k_post.db')
