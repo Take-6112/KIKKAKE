@@ -1,46 +1,22 @@
-<<<<<<< HEAD
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-<<<<<<< HEAD
-    <h1>こんにちは</h1>
-    <h2>こんばんは</h2>
-=======
->>>>>>> sugiyama_branch
-    <p>杉山です！</p>
-<<<<<<< HEAD:index.html
-    <p>萌花です！！！</p>
-=======
-    <h1>つぼです！</h1>
->>>>>>> b10d4dc7ee93aa0c315d9432a949b6e2ef46dccd:templates/index.html
-    <p>リモート削除 → git push --delete origin ブランチ名</p>
-    <p>マージ済みブランチ削除 → git branch -d ブランチ名</p>
-    <p>ローカルブランチ削除 → git branch -D ブランチ名</p>
-<<<<<<< HEAD
-    <p>復活！</p>
-=======
-    <p>ああああ</p>
->>>>>>> sugiyama_branch
-</body>
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KIKKAKE</title>
-</head>
-<body>
-    
+{% extends 'base.html' %}
+{% block main %}
+<!-- ここから下に中身を書くよ！！ -->  
     <div class="content">
         <div class="container">
             <div class="main">
                 <div class="main_inner">
+                    <div class="my_post clearfix">
+                        <form action="#" method="post">
+                            <input type="checkbox" name="category" value="awareness"  checked="checked" /> 今日の気づき
+                            <input type="checkbox" name="category" value="regret" /> 後悔・失敗
+                            <input type="checkbox" name="category" value="apology" /> 謝罪
+                            <input type="checkbox" name="category" value="thanks" /> 感謝
+                            <p>投稿：<br>
+                            <textarea name="comment" cols="30" rows="5" ></textarea></p>
+
+                            <input type="submit" value="投稿" />
+                        </form>
+                    </div>
                     <div class="post_loop_wrap clearfix">
                         <!-- ↓ 投稿タイトル -->
                         <div class="title_new">
@@ -48,40 +24,45 @@
                         </div>
                         <!-- ↓ 新着投稿一覧 -->
                         <div class="clearfix flex">
-
                         </div>
                     </div>
+
                     
+                    
+
                 </div>
             </div>
             <div class="side">
                 <div class="side_inner">
-                    <h4 class="side_title">
-                        <span class="side_title_inner">カテゴリー</span>
-                    </h4>
-                    <ul class="cat_item">
-                        <li class="cat_item_1">
-                            <img src="#" class="cat_item_1 img">
-                            <a href="/page_1">今日の気づき</a>
-                        </li>
-                        <li class="cat_item_2">
-                            <img src="#" class="cat_item_2 img">
-                            <a href="/page_2">後悔・失敗</a>
-                        </li>
-                        <li class="cat_item_3">
-                            <img src="#" class="cat_item_3 img">
-                            <a href="/page_3">謝罪</a>
-                        </li>
-                        <li class="cat_item_4">
-                            <img src="#" class="cat_item_4 img">
-                            <a href="/page_4">感謝</a>
-                        </li>
-                    </ul>
+                    <div class="post_btn">
+                        <a href="#" class="btn new_post">投稿はこちら</a>
+                    </div>
+                    <div class="category">
+                        <h4 class="side_title">
+                            <span class="side_title_inner">カテゴリー</span>
+                        </h4>
+                        <ul class="cat_item">
+                            <li class="cat_item_1">
+                                <img src="../static/img/今日の気づき（電球）.png" class="cat_item_1 img">
+                                <a href="/page_1">今日の気づき</a>
+                            </li>
+                            <li class="cat_item_2">
+                                <img src="../static/img/後悔・失敗（もやもや）.png" class="cat_item_2 img">
+                                <a href="/page_2">後悔・失敗</a>
+                            </li>
+                            <li class="cat_item_3">
+                                <img src="../static/img/謝罪　しずく.png" class="cat_item_3 img">
+                                <a href="/page_3">謝罪</a>
+                            </li>
+                            <li class="cat_item_4">
+                                <img src="../static/img/感謝（いいね、ハート）.png" class="cat_item_4 img">
+                                <a href="/page_4">感謝</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
     
             </div>
         </div>
     </div>
-</body>
->>>>>>> 46d33765f8706237c1c12dcfca9342d503438237
-</html>
+{% endblock %}
