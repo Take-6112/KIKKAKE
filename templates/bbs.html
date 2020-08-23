@@ -1,22 +1,73 @@
 {% extends 'base.html' %}
 {% block main %}
-<!-- ここから下に中身を書くよ！！ -->
-<h1>今日の気づき</h1>
-<div>
-    {% for post in posts %}
-    <div>
-          {% for item in content_list %}
-          <div class="bbs_content">
-            <p>{{item["content"]}}</p>
-            <p>投稿時間:{{item["time"]}}</p>
-              <a href="/edit/{{item['id']}}">編集</a>
-              <form class="delete" action="/del" method="post">
-                <input type="hidden" name="content_id" value="{{item['id']}}">
-                <input type="submit" name="delete" value="削除する">
-              </form><br><br>
-          </div>
-          {% endfor %}
-    {% endfor %}
-</div>
-<!-- ここまで！ -->
+<!-- ここから下に中身を書くよ！！ -->  
+    <div class="content">
+        <div class="container">
+            <div class="main">
+                <div class="main_inner">
+                    <div class="my_post clearfix">
+                        <p>{{user_info[0]}}さん こんにちは</p><br>
+                        <form action="/add" method="post">
+                            <input type="checkbox" name="category" value="awareness"  checked="checked" /> 今日の気づき
+                            <input type="checkbox" name="category" value="regret" /> 後悔・失敗
+                            <input type="checkbox" name="category" value="apology" /> 謝罪
+                            <input type="checkbox" name="category" value="thanks" /> 感謝
+                            <p>投稿者：{{user_info[0]}}<br>
+                            <textarea name="comment" cols="30" rows="5" ></textarea></p>
+                            <input type="submit" name="save" value="投稿" />
+                        </form>
+                    </div>
+                    <div class="post_loop_wrap clearfix">
+                        <!-- ↓ 投稿タイトル -->
+                        <div class="title_new">
+                            <span>投稿履歴</span>
+                        </div>
+                        <!-- ↓ 新着投稿一覧 -->
+                        <div class="clearfix flex">
+                            {% for item in comment_list %}
+                            <div class="bbs_content">
+                                <p>{{item["comment"]}}</p>
+                                <p>投稿時間:{{item["time"]}}</p>
+                                <a href="/edit/{{item['id']}}">編集</a>
+                                <form class="delete" action="/del" method="post">
+                                    <input type="hidden" name="comment_id" value="{{item['id']}}">
+                                    <input type="submit" name="delete" value="削除する">
+                                </form><br><br>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="side">
+                <div class="side_inner">
+                    <div class="category">
+                        <h4 class="side_title">
+                            <span class="side_title_inner">カテゴリー</span>
+                        </h4>
+                        <ul class="cat_item">
+                            <li class="cat_item_1">
+                                <img src="../static/img/今日の気づき（電球）.png" class="cat_item_1 img">
+                                <a href="/page_1">今日の気づき</a>
+                            </li>
+                            <li class="cat_item_2">
+                                <img src="../static/img/後悔・失敗（もやもや）.png" class="cat_item_2 img">
+                                <a href="/page_2">後悔・失敗</a>
+                            </li>
+                            <li class="cat_item_3">
+                                <img src="../static/img/謝罪　しずく.png" class="cat_item_3 img">
+                                <a href="/page_3">謝罪</a>
+                            </li>
+                            <li class="cat_item_4">
+                                <img src="../static/img/感謝（いいね、ハート）.png" class="cat_item_4 img">
+                                <a href="/page_4">感謝</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
 {% endblock %}
