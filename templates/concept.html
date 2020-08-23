@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="jp">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KIKKAKE</title>
-
-</head>
-<body> 
+{% extends 'base.html' %}
+{% block main %}
     <div class="main_wrapper">
         <div class="container">
             <h1 class="text_title">KIKKAKEについて</h1>
@@ -20,8 +13,8 @@
             <h1 class="text_title">VALUE 私達の価値観</h1>
             <p class="text_contents">あああああああああああああああああああああああああああああああああああああああ</p>
         </div>
-        <a href="/bbs" class="btn">書いてみる</a>
+        <div class="container">
+            <a href="/bbs" class="btn">書いてみる</a>
+        </div>
     </div>
-    
-</body>
-</html>
+{% endblock %}

@@ -1,3 +1,158 @@
-h1{
-    color: red;
+@charset "UTF-8";
+html {
+	overflow-y: scroll; /* IEへの対応 http://www.htmq.com/style/overflow-y.shtml */
+	/*Internet Explorerが独自に追加したプロパティ*/
+	/*画面に収まりきれなかったときにスクロールして表示することを許可するか否か*/
 }
+/* リセットおまじない--------------------------------- */
+
+body, h1, h2, h3, h4, h5, p, ul, ol, li, dl, dt, dd {
+	margin: 0px;
+	padding: 0px;
+}
+body {
+	background: #fff;
+	text-align: center;
+	font-size: 16px;
+	line-height: 1.4;
+	min-width: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+li {
+	list-style: none;
+}
+a {
+	outline: none;
+	color: inherit;
+	text-decoration: none;
+}
+img {
+	border: 0px;
+	vertical-align: bottom;
+}
+
+body {
+	font-family: "Noto Sans Japanese", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "游ゴシック", YuGothic, "メイリオ", "Meiryo", "HGPｺﾞｼｯｸM", "Osaka", "ＭＳ Ｐゴシック", sans-serif, Century Gothic, Arial;
+}
+
+header {
+    height: 100px;
+	width: 100%;
+    z-index: 10;
+}
+header div{
+    display:flex;
+ 
+    /*  ▼装飾など  */
+    padding: 10px;
+    background: #fdd35c;
+}
+ 
+header .header_left{
+    margin-right:auto;
+}
+  img{
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .header_search{
+    padding: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px;
+  }
+  .Box {
+    position: relative;
+    padding:0px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .Box-SearchInput {
+    border-radius: 4px;
+    border: none;
+    width: 100%;
+    height: 40px;
+    letter-spacing: 0.1em;
+    padding-left: 20px;
+    padding-right: 40px;
+    background: #fff;
+    color: #000;
+    font-size: 14px;
+  }
+  .Box-Btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    background: #2f2e2e;
+    vertical-align: middle;
+  }
+ 
+  .Box-Btn-Icon {
+    margin-left: auto;
+    margin-right: auto;
+    width: 15px;
+    height: 15px;
+  }
+
+.container {
+	max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+.container h1 {
+	font-size: 40px;
+	line-height: 50px;
+	font-weight: 200;
+}
+
+
+content h1 br {
+	display: none;
+	/* スマートフォンとPCでは画面幅が違うので、PC用のレイアウトでいれた改行が */
+	/* スマートフォン用のレイアウトできれいに改行されるとは限らないので none で消す */
+ }
+.content{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.content div h2 {
+	font-size: 20px;
+}
+.content div p {
+	font-size: 14px;
+	line-height: 1.8;
+}
+footer {
+    height: 200px;
+    background: #ffffff;
+}
+footer .copyright {
+    color: #acacac;
+    font-size: 12px;
+    padding-top: 0px;
+	letter-spacing: 1px;
+}  
+
+/* .bbs_content{
+	border-bottom:1px solid #111;
+	width:60%;
+	margin:30px auto 0;
+}  */
+
+/* #attention{
+	color: red;
+	font-weight: bold;
+	display: none;
+} */
