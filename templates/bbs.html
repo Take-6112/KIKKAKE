@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block main %}
+<!-- ここから下に中身を書くよ！！ -->
+<h1>今日の気づき</h1>
+<div>
+    {% for post in posts %}
+    <div>
+          {% for item in content_list %}
+          <div class="bbs_content">
+            <p>{{item["content"]}}</p>
+            <p>投稿時間:{{item["time"]}}</p>
+              <a href="/edit/{{item['id']}}">編集</a>
+              <form class="delete" action="/del" method="post">
+                <input type="hidden" name="content_id" value="{{item['id']}}">
+                <input type="submit" name="delete" value="削除する">
+              </form><br><br>
+          </div>
+          {% endfor %}
+    {% endfor %}
+</div>
+<!-- ここまで！ -->
+{% endblock %}
