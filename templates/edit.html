@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-
-{% block content %}
+{% block main %}
 
 <div>
   <form action="/edit">
     <input type="hidden" value="{{comment['id']}}" name="item_id">
-    内容：<textarea name="comment" cols="1000" rows="50">{{comment["comment"]}}</textarea><br>
+    <p>編集：<br>
+    <textarea name="comment" cols="100" rows="10">{{comment["comment"]}}</textarea></p>
     <input type="submit" name="save" value="編集する">
   </form>
 </div>
