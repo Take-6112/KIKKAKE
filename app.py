@@ -154,11 +154,7 @@ def edit(id):
         conn = sqlite3.connect('k_post.db')
         c = conn.cursor()
         c.execute("select comment from k_posts where id = ?", (id,) )
-<<<<<<< HEAD
         comment = c.fetchone()
-=======
-        content = c.fetchone()
->>>>>>> master
         conn.close()
 
         if comment is not None:
@@ -183,11 +179,7 @@ def update_item():
         item_id = request.args.get("item_id") # id
         print(item_id)
         item_id = int(item_id) # ブラウザから送られてきたのは文字列なので整数に変換する
-<<<<<<< HEAD
         comment = request.args.get("comment") # 編集されたテキストを取得する
-=======
-        content = request.args.get("comment") # 編集されたテキストを取得する
->>>>>>> master
 
         # 既にあるデータベースのデータを送られてきたデータに更新
         conn = sqlite3.connect('k_post.db')
