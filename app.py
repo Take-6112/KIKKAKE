@@ -11,10 +11,6 @@ app.secret_key = "08smmon28"
 from datetime import datetime
 
 @app.route('/')
-def concept():
-    return render_template('concept.html')
-
-@app.route('/home')
 def index():
     return render_template('index.html')
 
