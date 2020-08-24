@@ -8,10 +8,10 @@
                     <div class="my_post clearfix">
                         <p>{{user_info[0]}}さん こんにちは</p><br>
                         <form action="/add" method="post">
-                            <input type="checkbox" name="category" value="awareness"  checked="checked" /> 今日の気づき
-                            <input type="checkbox" name="category" value="regret" /> 後悔・失敗
-                            <input type="checkbox" name="category" value="apology" /> 謝罪
-                            <input type="checkbox" name="category" value="thanks" /> 感謝
+                            <input type="checkbox" name="cat_id" value="1"  checked="checked" /> 今日の気づき
+                            <input type="checkbox" name="cat_id" value="2" /> 後悔・失敗
+                            <input type="checkbox" name="cat_id" value="3" /> 謝罪
+                            <input type="checkbox" name="cat_id" value="4" /> 感謝
                             <p>投稿者：{{user_info[0]}}<br>
                             <textarea name="comment" cols="100" rows="10" ></textarea></p>
                             <div id="fb-root"></div>
