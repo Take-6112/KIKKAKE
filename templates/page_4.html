@@ -3,10 +3,11 @@
 <!-- ここから下に中身を書くよ！！ -->
 <h1>感謝</h1>
 <div>
-    {% for post in posts %}
-    <h2>{{ post.title }}</h2>
-    <p>{{ post.title }}</p>
-    <p>{{ post.date_posted }}</p>
+    {% for item in comment_list %}
+    <div class="page_4_content">
+        <p>{{item["comment"]}}</p>
+        <p>投稿時間:{{item["time"]}}</p>
+    </div>
     {% endfor %}
 </div>
 <!-- ここまで！ -->
