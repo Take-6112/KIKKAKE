@@ -19,24 +19,24 @@ def concept():
     return render_template('concept.html')
 
 # /page_1 と入れる page_1.htmlにとぶ
-@app.route("/page_1")
-def page_1():
-    return render_template("page_1.html")
+# @app.route("/page_1")
+# def page_1():
+#     return render_template("page_1.html")
 
 # /page_2 と入れる page_2.htmlにとぶ
-@app.route("/page_2")
-def page_2():
-    return render_template("page_2.html")
+# @app.route("/page_2")
+# def page_2():
+#     return render_template("page_2.html")
 
 # /page_3 と入れる page_3.htmlにとぶ
-@app.route("/page_3")
-def page_3():
-    return render_template("page_3.html")
+# @app.route("/page_3")
+# def page_3():
+#     return render_template("page_3.html")
 
 # /page_4 と入れる page_4.htmlにとぶ
-@app.route("/page_4")
-def page_4():
-    return render_template("page_4.html")
+# @app.route("/page_4")
+# def page_4():
+#     return render_template("page_4.html")
 
 # GET  /register => 登録画面を表示
 # POST /register => 登録処理をする
@@ -208,6 +208,66 @@ def del_task():
     conn.close()
     # 処理終了後に一覧画面に戻す
     return redirect("/bbs")
+
+# page_1カテゴリーに飛ぶ
+@app.route('/page_1')
+def page_1():
+    
+    conn = sqlite3.connect('k_post.db')
+    c = conn.cursor()
+    
+    c.execute("select id, comment, time from k_posts where cat_id = 1")
+    comment_list = []
+    for row in c.fetchall():
+        comment_list.append({"id": row[0], "comment": row[1], "time":row[2]})
+    c.close()
+    return render_template('page_1.html' , comment_list = comment_list)
+
+
+# page_2カテゴリーに飛ぶ
+@app.route('/page_2')
+def page_2():
+    
+    conn = sqlite3.connect('k_post.db')
+    c = conn.cursor()
+    
+    c.execute("select id, comment, time from k_posts where cat_id = 2")
+    comment_list = []
+    for row in c.fetchall():
+        comment_list.append({"id": row[0], "comment": row[1], "time":row[2]})
+    c.close()
+    return render_template('page_2.html' , comment_list = comment_list)
+
+
+# page_3カテゴリーに飛ぶ
+@app.route('/page_3')
+def page_3():
+    
+    conn = sqlite3.connect('k_post.db')
+    c = conn.cursor()
+    
+    c.execute("select id, comment, time from k_posts where cat_id = 3")
+    comment_list = []
+    for row in c.fetchall():
+        comment_list.append({"id": row[0], "comment": row[1], "time":row[2]})
+    c.close()
+    return render_template('page_3.html' , comment_list = comment_list)
+
+
+# page_4カテゴリーに飛ぶ
+@app.route('/page_4')
+def page_4():
+    
+    conn = sqlite3.connect('k_post.db')
+    c = conn.cursor()
+    
+    c.execute("select id, comment, time from k_posts where cat_id = 4")
+    comment_list = []
+    for row in c.fetchall():
+        comment_list.append({"id": row[0], "comment": row[1], "time":row[2]})
+    c.close()
+    return render_template('page_4.html' , comment_list = comment_list)
+
 
 @app.errorhandler(403)
 def mistake403(code):
