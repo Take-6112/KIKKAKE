@@ -49,16 +49,16 @@ header div{
 }
 .header_title1{
   color: rgb(255,135,0);
-  /* -webkit-text-stroke: 0.4px #FFF;
-  text-stroke: 0.4px #FFF; */
+  -webkit-text-stroke: 0.4px #FFF;
+  text-stroke: 0.4px #FFF;
   font-weight: bolder;
   font-size: 50px;
 }
 
 .header_title2 {
   color: #888788; 
-  /* -webkit-text-stroke: 0.3px #FFF;
-  text-stroke: 0.3px #FFF; */
+  -webkit-text-stroke: 0.3px #FFF;
+  text-stroke: 0.3px #FFF;
   font-weight: bold;
   font-size: 48px;
 }
