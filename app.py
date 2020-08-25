@@ -136,14 +136,16 @@ def add():
     time = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
     # POSTアクセスならDBに登録する
     # フォームから入力されたアイテム名の取得
-    content = request.form.get("content")
+    comment = request.form.get("comment")
+     # チェックボックスから選択されたカテゴリーの取得
+    cat_id = request.form.get("cat_id") 
     conn = sqlite3.connect('k_post.db')
     c = conn.cursor()
     # 現在の最大ID取得(fetchoneの戻り値はタプル)
 
     # null,?,?,0の0はdel_flagのデフォルト値
-    # timeを新たにinsert
-    c.execute("insert into k_posts values(null,?,?,0,?)", (user_id, comment,time))
+    # cat_idを新たにinsert
+    c.execute("insert into k_posts values(null,?,?,0,?,?)", (user_id, comment,time,cat_id))
     conn.commit()
     conn.close()
     return redirect('/bbs')
