@@ -11,12 +11,12 @@ app.secret_key = "08smmon28"
 from datetime import datetime
 
 @app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/concept')
 def concept():
     return render_template('concept.html')
-
-@app.route('/home')
-def index():
-    return render_template('bbs.html')
 
 # /page_1 と入れる page_1.htmlにとぶ
 # @app.route("/page_1")
