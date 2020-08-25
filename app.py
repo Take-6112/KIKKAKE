@@ -159,16 +159,16 @@ def edit(id):
         comment = c.fetchone()
         conn.close()
 
-        if comment is not None:
+        if content is not None:
             # None に対しては インデクス指定できないので None 判定した後にインデックスを指定
-            comment = comment[0] # "りんご" ○   ("りんご",) ☓
+            content = contentt[0] # "りんご" ○   ("りんご",) ☓
             # fetchone()で取り出したtupleに 0 を指定することで テキストだけをとりだす
         else:
             return "アイテムがありません" # 指定したIDの name がなければときの対処
 
-        item = { "id":id, "comment":comment }
+        item = { "id":id, "content":content }
 
-        return render_template("edit.html", comment=item)
+        return render_template("edit.html", content=item)
     else:
         return redirect("/login")
 
@@ -181,7 +181,7 @@ def update_item():
         item_id = request.args.get("item_id") # id
         print(item_id)
         item_id = int(item_id) # ブラウザから送られてきたのは文字列なので整数に変換する
-        comment = request.args.get("comment") # 編集されたテキストを取得する
+        content = request.args.get("content") # 編集されたテキストを取得する
 
         # 既にあるデータベースのデータを送られてきたデータに更新
         conn = sqlite3.connect('k_post.db')
@@ -193,11 +193,11 @@ def update_item():
         # アイテム一覧へリダイレクトさせる
         return redirect("/bbs")
     else:
-        return redirect("/login")
+        return redirect("/home")
 
 @app.route('/del' , methods=["POST"])
 def del_task():
-    id = request.form.get("comment_id")
+    id = request.form.get("content_id")
     id = int(id)
     conn = sqlite3.connect('k_post.db')
     c = conn.cursor()
