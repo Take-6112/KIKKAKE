@@ -7,6 +7,8 @@
     <link rel="stylesheet" type="text/css" media="screen and ( min-width:769px )" href="../static/CSS/kikkake.css">
     <link rel="stylesheet" type="text/css" media="screen and ( max-width:768px )" href="../static/CSS/kikkake_sp.css">
     <link href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
     <title>KIKKAKE</title>
 </head>
 <body>
@@ -27,6 +29,14 @@
                         <input type="search" class="Box-SearchInput" name="" value="" placeholder="キーワードを入力">
                         <button type="submit" class="Box-Btn" name=""><img src="../static/img/虫眼鏡.png" class="Box-Btn-Icon" alt=""></button>
                     </div>
+                </div>
+
+                <!-- ハンバーガーメニュー -->
+                <div id="nav-drawer">
+                    <input id="nav-input" type="checkbox" class="nav-unshown">
+                    <label id="nav-open" for="nav-input"><span></span></label>
+                    <label class="nav-unshown" id="nav-close" for="nav-input"></label>
+                    <div id="nav-content">カテゴリー</div>
                 </div>
 
                 <div class="header_btn">
