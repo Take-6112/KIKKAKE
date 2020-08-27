@@ -1,17 +1,48 @@
 {% extends 'base.html' %}
 {% block main %}
 
-<div>
-  <form action="/edit">
-    <input type="hidden" value="{{comment['id']}}" name="item_id">
-    <p>編集：<br>
-    <input type="radio" name="cat_id" value="1"  checked="checked" /> 今日の気づき
-    <input type="radio" name="cat_id" value="2" /> 後悔・失敗
-    <input type="radio" name="cat_id" value="3" /> 謝罪
-    <input type="radio" name="cat_id" value="4" /> 感謝<br>
-    <textarea name="comment" cols="100" rows="10">{{comment["comment"]}}</textarea></p>
-    <input type="submit" name="save" value="編集する">
-  </form>
+<div class="main_wrapper">
+  <div class="container">
+    <div class="main">
+      <form action="/edit">
+        <input type="hidden" value="{{comment['id']}}" name="item_id">
+        <p>編集：<br>
+        <input type="radio" name="cat_id" value="1"  checked="checked" /> 今日の気づき
+        <input type="radio" name="cat_id" value="2" /> 後悔・失敗
+        <input type="radio" name="cat_id" value="3" /> 謝罪
+        <input type="radio" name="cat_id" value="4" /> 感謝<br>
+        <textarea name="comment" cols="100" rows="10">{{comment["comment"]}}</textarea></p>
+        <input type="submit" name="save" value="編集する">
+      </form>
+    </div>
+  </div>
+  <div class="side">
+    <div class="side_inner">
+      <div class="category">
+        <h4 class="side_title">
+          <span class="side_title_inner">カテゴリー</span>
+        </h4>
+        <ul class="cat_item">
+          <li class="cat_item_1">
+            <img src="../static/img/今日の気づき（電球）.png" class="cat_item_1 cat_img cat">
+            <a class="cat" href="/page_1">今日の気づき</a>
+          </li>
+          <li class="cat_item_2">
+            <img src="../static/img/後悔・失敗（もやもや）.png" class="cat_item_2 cat_img cat">
+            <a class="cat" href="/page_2">後悔・失敗</a>
+          </li>
+          <li class="cat_item_3">
+            <img src="../static/img/謝罪　しずく.png" class="cat_item_3 cat_img cat">
+            <a class="cat" href="/page_3">謝罪</a>
+          </li>
+          <li class="cat_item_4">
+            <img src="../static/img/感謝（いいね、ハート）.png" class="cat_item_4 cat_img cat">
+            <a class="cat" href="/page_4">感謝</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %}
