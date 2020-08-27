@@ -159,6 +159,17 @@ content h1 br {
   font-size: 90px;
   padding:250px 0px;
 }
+.toppage_title2 , .toppage_title4 {
+  color: rgb(255,135,0);
+}
+.toppage_2 , .toppage_4{
+  color:#868686;
+  font-size:20px
+}
+.toppage_2 h4, .toppage_4 h4{
+  color:#2f2e2e;
+}
+
 .btn-square-shadow {
   display: inline-block;
   padding: 0.5em 1em;
