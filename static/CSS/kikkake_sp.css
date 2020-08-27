@@ -104,7 +104,13 @@ header {
 	-webkit-transform: translateX(-105%);
 	transform: translateX(-105%);/*左に隠しておく*/
   }
-  
+  .cat{
+	display: inline-block;
+  }
+  .cat_img {
+	height: 35px;
+	width: 35px;
+  }
   /*チェックが入ったらもろもろ表示*/
   #nav-input:checked ~ #nav-close {
 	display: block;/*カバーを表示*/
