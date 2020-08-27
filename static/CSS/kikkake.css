@@ -123,6 +123,10 @@ header div{
     height: 20px;
   }
 
+.catchcopy{
+  padding:10px;
+}
+
 .fa-home{
   font-size: 25px;
   color: rgb(255,135,0);
@@ -229,7 +233,7 @@ h1 .container {
   color: rgb(255,135,0);
 }
 .toppage_2 , .toppage_4{
-  color:#868686;
+  color:#706d6d;
   font-size:20px
 }
 .toppage_2 h4, .toppage_4 h4{
