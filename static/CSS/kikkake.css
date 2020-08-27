@@ -1,6 +1,7 @@
 @charset "UTF-8";
 html {
-	overflow-y: scroll; /* IEへの対応 http://www.htmq.com/style/overflow-y.shtml */
+  overflow-y: scroll; 
+  /* IEへの対応 http://www.htmq.com/style/overflow-y.shtml */
 	/*Internet Explorerが独自に追加したプロパティ*/
 	/*画面に収まりきれなかったときにスクロールして表示することを許可するか否か*/
 }
@@ -15,7 +16,8 @@ body {
 	text-align: center;
 	font-size: 16px;
 	line-height: 1.4;
-	min-width: 100%;
+  min-width: 100%;
+  height: 100%;
 	-webkit-text-size-adjust: 100%;
 }
 
@@ -55,7 +57,6 @@ header div{
   font-weight: bolder;
   font-size: 50px;
 }
-
 .header_title2 {
   color: #888788; 
   -webkit-text-stroke: 0.3px #FFF;
@@ -65,12 +66,15 @@ header div{
 }
 .header_logo_title{
   color:#868686; 
-  font-size: 20px;
-  padding-top: 30px;
+  font-size: 16px;
 }
-header .header_left{
+.header_left{
   margin-right:auto;
   font-weight: 500;
+  display: block;
+}
+.header_right{
+  vertical-align: middle;
 }
 .header_search{
   padding: 0px;
@@ -141,11 +145,14 @@ header .header_left{
   max-width: 1200px;
   display: -webkit-flex;
   display: flex;
+  height: 100%;
 }
 .container{
   display: block;
-  width: 800px;
+  padding: 30px 0;
+  width: 70%;
   margin-right: 20px;
+  height: 100vh;
 }
 .main{
   width: auto;
@@ -157,13 +164,13 @@ header .header_left{
   top: 0;
   right: 0;
   /*余白が入らないように*/
-  margin-top: 140px;
+  margin-top: 120px;
   /*以下装飾*/
   width: 300px;
-  padding: 0 30px;
+  padding: 30px 30px;
 }
 .category{
-  padding: 0 20px;
+  padding: 20px 20px;
 }
 .side-title .side_title_inner {
     margin: 0;
