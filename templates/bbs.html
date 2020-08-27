@@ -8,21 +8,20 @@
                     <div class="my_post clearfix">
                         <p>{{user_info[0]}}さん こんにちは</p><br>
                         <form action="/add" method="post">
-                            <input type="checkbox" name="cat_id" value="1"  checked="checked" /> 今日の気づき
-                            <input type="checkbox" name="cat_id" value="2" /> 後悔・失敗
-                            <input type="checkbox" name="cat_id" value="3" /> 謝罪
-                            <input type="checkbox" name="cat_id" value="4" /> 感謝
+                            <input type="radio" name="cat_id" value="1"  checked="checked" /> 今日の気づき
+                            <input type="radio" name="cat_id" value="2" /> 後悔・失敗
+                            <input type="radio" name="cat_id" value="3" /> 謝罪
+                            <input type="radio" name="cat_id" value="4" /> 感謝
                             <p>投稿者：{{user_info[0]}}<br>
-                            <textarea name="comment" cols="100" rows="10" ></textarea></p>
-                            <div id="fb-root"></div>
-                            <script>(function(d, s, id) {
-                            var js, fjs = d.getElementsByTagName(s)[0];
-                            if (d.getElementById(id)) return;
-                            js = d.createElement(s); js.id = id;
-                            js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.4";
-                            fjs.parentNode.insertBefore(js, fjs);
-                            }(document, 'script', 'facebook-jssdk'));</script>
-                            <div class="fb-like" data-share="true" data-layout="box_count" ></div>
+                            <textarea name="comment" maxlength="1000" cols="100" rows="10" placeholder="ここに文字を入力"></textarea></p>
+
+                            <!-- いいねボタン2 -->
+                            <!-- <form id="form">
+                                <button type="submit" name="button">&#x1f44d;</button>
+                                <button type="submit" name="button">&#x1f496;</button>
+                            </form>
+                                <div id="output"></div> -->
+
 
                             <input type="submit" name="save" value="投稿" />
                         </form>

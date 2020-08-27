@@ -1,5 +1,5 @@
 # Flaskからimportしてflaskを使えるようにする
-from flask import Flask,render_template,request,redirect,session
+from flask import Flask, render_template, request, redirect, session, json, jsonify
 import sqlite3
 
 #appっていう名前でFlaskアプリをつくっていくよ～みたいな
@@ -118,7 +118,7 @@ def bbs():
 
         # 課題1の答えはここ del_flagが0のものだけ表示する
         # 課題2の答えはここ 保存されているtimeも表示する
-        c.execute("select id,comment,time from k_posts where user_id = ? and del_flag = 0 order by id", (user_id,))
+        c.execute("select id,comment,time from k_posts where user_id = ? and del_flag = 0 order by time desc", (user_id,))
         comment_list = []
         for row in c.fetchall():
             comment_list.append({"id": row[0], "comment": row[1], "time":row[2]})
@@ -127,6 +127,32 @@ def bbs():
         return render_template('bbs.html' , user_info = user_info , comment_list = comment_list)
     else:
         return redirect("/login")
+
+# 自分の好きなstampを設置できる
+# @app.route('/bbs', methods=['POST'])
+# def bbs():
+#     if 'user_id' in session :
+#         user_id = session['user_id']
+#         conn = sqlite3.connect('k_post.db')
+#         c = conn.cursor()
+        # # DBにアクセスしてログインしているユーザ名と投稿内容を取得する
+        # クッキーから取得したuser_idを使用してusersテーブルのnameを取得
+        # c.execute("select name from users where id = ?", (user_id,))
+        # fetchoneはタプル型
+        # user_info = c.fetchone()
+        # user_infoの中身を確認
+
+        # 課題1の答えはここ del_flagが0のものだけ表示する
+        # 課題2の答えはここ 保存されているtimeも表示する
+    #     c.execute("select id,comment,time from k_posts where user_id = ? and del_flag = 0 order by id", (user_id,))
+    #     comment_list = []
+    #     for row in c.fetchall():
+    #         comment_list.append({"id": row[0], "comment": row[1], "time":row[2]})
+
+    #     c.close()
+    #     return render_template('bbs.html' , user_info = user_info , comment_list = comment_list)
+    # else:
+    #     return redirect("/login")
 
 
 @app.route('/add', methods=["POST"])
@@ -159,16 +185,16 @@ def edit(id):
         comment = c.fetchone()
         conn.close()
 
-        if content is not None:
+        if comment is not None:
             # None に対しては インデクス指定できないので None 判定した後にインデックスを指定
-            content = contentt[0] # "りんご" ○   ("りんご",) ☓
+            comment = comment[0] # "りんご" ○   ("りんご",) ☓
             # fetchone()で取り出したtupleに 0 を指定することで テキストだけをとりだす
         else:
             return "アイテムがありません" # 指定したIDの name がなければときの対処
 
-        item = { "id":id, "content":content }
+        item = { "id":id, "comment":comment }
 
-        return render_template("edit.html", content=item)
+        return render_template("edit.html", comment=item)
     else:
         return redirect("/login")
 
@@ -181,12 +207,12 @@ def update_item():
         item_id = request.args.get("item_id") # id
         print(item_id)
         item_id = int(item_id) # ブラウザから送られてきたのは文字列なので整数に変換する
-        content = request.args.get("content") # 編集されたテキストを取得する
-
+        comment = request.args.get("comment") # 編集されたテキストを取得する
+        cat_id = request.args.get("cat_id")
         # 既にあるデータベースのデータを送られてきたデータに更新
         conn = sqlite3.connect('k_post.db')
         c = conn.cursor()
-        c.execute("update k_posts set comment = ? where id = ?",(comment,item_id))
+        c.execute("update k_posts set comment = ?, cat_id = ? where id = ?",(comment,cat_id,item_id))
         conn.commit()
         conn.close()
 
@@ -197,7 +223,7 @@ def update_item():
 
 @app.route('/del' , methods=["POST"])
 def del_task():
-    id = request.form.get("content_id")
+    id = request.form.get("comment_id")
     id = int(id)
     conn = sqlite3.connect('k_post.db')
     c = conn.cursor()
@@ -216,7 +242,7 @@ def page_1():
     conn = sqlite3.connect('k_post.db')
     c = conn.cursor()
     
-    c.execute("select id, comment, time from k_posts where cat_id = 1")
+    c.execute("select id, comment, time from k_posts where cat_id = 1 order by time desc")
     comment_list = []
     for row in c.fetchall():
         comment_list.append({"id": row[0], "comment": row[1], "time":row[2]})
@@ -231,7 +257,7 @@ def page_2():
     conn = sqlite3.connect('k_post.db')
     c = conn.cursor()
     
-    c.execute("select id, comment, time from k_posts where cat_id = 2")
+    c.execute("select id, comment, time from k_posts where cat_id = 2 order by time desc")
     comment_list = []
     for row in c.fetchall():
         comment_list.append({"id": row[0], "comment": row[1], "time":row[2]})
@@ -246,7 +272,7 @@ def page_3():
     conn = sqlite3.connect('k_post.db')
     c = conn.cursor()
     
-    c.execute("select id, comment, time from k_posts where cat_id = 3")
+    c.execute("select id, comment, time from k_posts where cat_id = 3 order by time desc")
     comment_list = []
     for row in c.fetchall():
         comment_list.append({"id": row[0], "comment": row[1], "time":row[2]})
@@ -261,7 +287,7 @@ def page_4():
     conn = sqlite3.connect('k_post.db')
     c = conn.cursor()
     
-    c.execute("select id, comment, time from k_posts where cat_id = 4")
+    c.execute("select id, comment, time from k_posts where cat_id = 4 order by time desc")
     comment_list = []
     for row in c.fetchall():
         comment_list.append({"id": row[0], "comment": row[1], "time":row[2]})
