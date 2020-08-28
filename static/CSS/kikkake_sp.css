@@ -125,7 +125,7 @@ header {
 /*ここまでがハンバーガーメニュー*/
 
   header div{
-	display:flex;
+	/* display:flex; */
   
 	/*  ▼装飾など  */
 	padding: 10px;
@@ -238,7 +238,44 @@ header {
 	font-size: 14px;
 	line-height: 1.8;
 }
+
+.toppage{
+	text-align: center;
+	padding:15px;
+}
+
+
+.toppage_title2 , .toppage_title4 {
+	color: rgb(255,135,0);
+  }
+  .toppage_2 , .toppage_4{
+	color:#706d6d;
+	font-size:20px
+  }
+  .toppage_2 h4, .toppage_4 h4{
+	color:#2f2e2e;
+  }
+  
+
+.btn-square-shadow {
+	text-align: center;
+	padding: 0.5em 1em;
+	text-decoration: none;
+	background: #668ad8;/*ボタン色*/
+	color: #FFF;
+	border-bottom: solid 4px #627295;
+	border-radius: 3px;
+  }
+  .btn-square-shadow:active {
+	/*ボタンを押したとき*/
+	-webkit-transform: translateY(4px);
+	transform: translateY(4px);/*下に動く*/
+	box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);/*影を小さく*/
+	border-bottom: none;
+  }
+
 footer {
+	text-align: center;
     height: 100px;
     background-color: #D0CFD0;
 }
