@@ -224,8 +224,10 @@ h1 .container {
 	font-size: 20px;
   line-height: 50px;
 }
-
-.toppage_title2 , .toppage_title4 {
+.toppage{
+  text-align: center;
+}
+.toppage_title2, .toppage_title4 {
   color: rgb(255,135,0);
 }
 .toppage_2 , .toppage_4{
