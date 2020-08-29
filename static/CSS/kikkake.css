@@ -163,6 +163,9 @@ header div{
 .main_inner div{
   text-align: center;
 }
+.login{
+  text-align: center;
+}
 .clearfix{
   width: auto;
   margin : 0 100px;
