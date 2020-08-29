@@ -123,10 +123,6 @@ header div{
     height: 20px;
   }
 
-.catchcopy{
-  padding:10px;
-}
-
 .fa-home{
   font-size: 25px;
   color: rgb(255,135,0);
@@ -159,9 +155,50 @@ header div{
 .main{
   width: auto;
   margin : 0 20px;
-
 }
 
+.main_inner form{
+  text-align: center;
+}
+.main_inner div{
+  text-align: center;
+}
+.login{
+  text-align: center;
+}
+.clearfix{
+  width: auto;
+  margin : 0 100px;
+  text-align: center;
+}
+#contentbox, #borderbox {
+  padding: 10px 0;
+  height: 100vh;
+}
+
+#contentbox div {
+  box-sizing: content-box;
+  }
+
+#borderbox div {
+  box-sizing: border-box;
+  }
+
+#contentbox div .post_inner, #borderbox div .post_inner{
+/*どちらも同じ幅・余白設定に*/	
+  width: 90%;
+  margin: 5%;
+  padding: 10px;
+  border: solid 1px orange;
+  background: #ffffff;;
+}
+.title_new{
+  font-size: 40px;
+  font-weight: bold;
+}
+.all_post{
+  width: auto;
+}
 textarea{
   width: 80%;
 }
@@ -218,18 +255,24 @@ h1 .container {
   font-weight: bold;
   padding: 20px 0;
 }
-
+.catchcopy{
+  padding: 10px;
+}
 .catchcopy h1{
+  text-align: center;
   font-size: 90px;
   padding:250px 0px;
-  padding: 20px 0;
+  padding: 200px 0;
 }
 .container p {
 	font-size: 20px;
   line-height: 50px;
 }
-
-.toppage_title2 , .toppage_title4 {
+.toppage{
+  text-align: center;
+  padding:15px;
+}
+.toppage_title2, .toppage_title4 {
   color: rgb(255,135,0);
 }
 .toppage_2 , .toppage_4{
@@ -241,12 +284,13 @@ h1 .container {
 }
 
 .btn-square-shadow {
+  text-align: center;
   display: inline-block;
   padding: 0.5em 1em;
   text-decoration: none;
-  background: #668ad8;/*ボタン色*/
+  background: rgb(255,135,0);/*ボタン色*/
   color: #FFF;
-  border-bottom: solid 4px #627295;
+  border-bottom: solid 4px rgb(172, 92, 0);
   border-radius: 3px;
 }
 .btn-square-shadow:active {
@@ -256,10 +300,15 @@ h1 .container {
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);/*影を小さく*/
   border-bottom: none;
 }
+.start_btn{
+  display:inline-block;
+  text-align:center;
+  width:100%;
+}
 footer {
-    height: 100px;
-    background-color: #D0CFD0;
-    text-align: center;
+  text-align: center;
+  height: 100px;
+  background-color: #D0CFD0;
 }
 footer .copyright {
     color: #888788;

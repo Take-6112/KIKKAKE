@@ -1,17 +1,19 @@
 {% extends 'base.html' %}
 {% block main %}
-
-<form action="/login" method="post">
-  <br>
-  <br>
-  <br>
-  名前：<input type="text" name="name"><br>
-  <br>
-  パスワード：<input type="password" name="password"><br>
-  <br>
-  <input type="submit" value="ログイン">
-  <br>
-  <br>
-</form>
-
+<div class="main_wrapper">
+  <div class="toppage">
+    <form class="login" action="/login" method="post">
+      <br>
+      <br>
+      <br>
+      名前：<input type="text" name="name"><br>
+      <br>
+      パスワード：<input type="password" name="password"><br>
+      <br>
+      <input type="submit" value="ログイン">
+      <br>
+      <br>
+    </form>
+  </div>
+</div>
 {% endblock %}

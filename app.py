@@ -18,25 +18,18 @@ def index():
 def concept():
     return render_template('concept.html')
 
-# /page_1 と入れる page_1.htmlにとぶ
-# @app.route("/page_1")
-# def page_1():
-#     return render_template("page_1.html")
+#登録しなくてもみんなのKIKKAKEは見れる
+@app.route('/register')
+def all_post():
+    conn = sqlite3.connect('k_post.db')
+    c = conn.cursor()
+    # DBにアクセスして投稿内容を取得する
+    c.execute("select id,comment,time from k_posts where del_flag = 0 order by time desc")
+    all_post = []
+    for row in c.fetchall():
+        all_post.append({"id": row[0], "comment": row[1], "time":row[2]})
+    return render_template('register.html',all_post = all_post)
 
-# /page_2 と入れる page_2.htmlにとぶ
-# @app.route("/page_2")
-# def page_2():
-#     return render_template("page_2.html")
-
-# /page_3 と入れる page_3.htmlにとぶ
-# @app.route("/page_3")
-# def page_3():
-#     return render_template("page_3.html")
-
-# /page_4 と入れる page_4.htmlにとぶ
-# @app.route("/page_4")
-# def page_4():
-#     return render_template("page_4.html")
 
 # GET  /register => 登録画面を表示
 # POST /register => 登録処理をする
