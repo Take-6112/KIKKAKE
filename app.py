@@ -148,8 +148,8 @@ def bbs():
     #     return redirect("/login")
 
 
-@app.route('/bbs')
-def bbs():
+# @app.route('/bbs')
+# def bbs():
     if 'user_id' in session :
         user_id = session['user_id']
         conn = sqlite3.connect('k_post.db')
@@ -169,7 +169,7 @@ def bbs():
         c.close()
         return render_template('bbs.html' , user_info = user_info , content_list = content_list)
     else:
-        return redirect("/bbs")
+        return redirect("/login")
 
 @app.route('/add', methods=["POST"])
 def add():
@@ -235,7 +235,7 @@ def update_item():
         # アイテム一覧へリダイレクトさせる
         return redirect("/bbs")
     else:
-        return redirect("/home")
+        return redirect("/login")
 
 @app.route('/del' , methods=["POST"])
 def del_task():
