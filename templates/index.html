@@ -1,68 +1,83 @@
+
 {% extends 'base.html' %}
 {% block main %}
-<!-- ここから下に中身を書くよ！！ -->  
-    <div class="content">
-        <div class="container">
-            <div class="main">
-                <div class="main_inner">
-                    <div class="my_post clearfix">
-                        <form action="#" method="post">
-                            <input type="checkbox" name="category" value="awareness"  checked="checked" /> 今日の気づき
-                            <input type="checkbox" name="category" value="regret" /> 後悔・失敗
-                            <input type="checkbox" name="category" value="apology" /> 謝罪
-                            <input type="checkbox" name="category" value="thanks" /> 感謝
-                            <p>投稿：<br>
-                            <textarea name="comment" cols="30" rows="5" ></textarea></p>
+<div class="main_wrapper">
+    <div class="toppage">
+            <!-- <video controls autoplay muted loop playsinline width="90%">
+                <source src="../static/KIKKAKEプレゼンスライド.mp4"> 
+            </video> -->
+            <!-- <img src="../static/img/スライド.png" alt="きっかけ。届けよう。その気持ち。皆の匿名掲示板"> -->
 
-                            <input type="submit" value="投稿" />
-                        </form>
-                    </div>
-                    <div class="post_loop_wrap clearfix">
-                        <!-- ↓ 投稿タイトル -->
-                        <div class="title_new">
-                            <span>新着投稿</span>
-                        </div>
-                        <!-- ↓ 新着投稿一覧 -->
-                        <div class="clearfix flex">
-                        </div>
-                    </div>
-
-                    
-                    
-
-                </div>
+            <div class="catchcopy">
+                <br>
+                <br>
+                <h1>言葉に寄り添う。</h1>
+                <br>
+                <br>
             </div>
-            <div class="side">
-                <div class="side_inner">
-                    <div class="post_btn">
-                        <a href="#" class="btn new_post">投稿はこちら</a>
-                    </div>
-                    <div class="category">
-                        <h4 class="side_title">
-                            <span class="side_title_inner">カテゴリー</span>
-                        </h4>
-                        <ul class="cat_item">
-                            <li class="cat_item_1">
-                                <img src="../static/img/今日の気づき（電球）.png" class="cat_item_1 img">
-                                <a href="/page_1">今日の気づき</a>
-                            </li>
-                            <li class="cat_item_2">
-                                <img src="../static/img/後悔・失敗（もやもや）.png" class="cat_item_2 img">
-                                <a href="/page_2">後悔・失敗</a>
-                            </li>
-                            <li class="cat_item_3">
-                                <img src="../static/img/謝罪　しずく.png" class="cat_item_3 img">
-                                <a href="/page_3">謝罪</a>
-                            </li>
-                            <li class="cat_item_4">
-                                <img src="../static/img/感謝（いいね、ハート）.png" class="cat_item_4 img">
-                                <a href="/page_4">感謝</a>
-                            </li>
-                        </ul>
-                    </div>
+            <div class="toppage">
+                <br>
+                <br>
+                <br>
+                <div class="toppage_1">
+                    <h2>
+                        <span class="toppage_title1">わたしの</span>
+                        <span class="toppage_title2">声</span>
+                        <span class="toppage_title3">を聞こう</span>
+                    </h2>
                 </div>
-    
+                <div class="toppage_2">
+                    <br>
+                    <br>
+                    <p>もし、あなたが今日までの命だと誰に何を伝えたいですか？</p>
+                    <p>ありがとう、ごめんなさい、大好き。</p>
+                    <p>そんな想いを言葉にして綴りませんか？</p>
+                    <br>
+                    <p>言葉はカタチもなくモノでもありませんが形ある物以上に、</p>
+                    <p>人のココロを動かす。</p>
+                    <p>そんな魔法の言葉素直に届けよう。</p>
+                    <br>
+                    <h4>世の中に、ほんのちょっとのきっかけを</h4>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <div class="toppage_3">
+                    <h2><span class="toppage_title4">K</span><span class="toppage_title5">IKKAKE とは</span></h2>
+                </div>
+                <br>
+                <br>
+                <div class="toppage_4">
+                    <ul>
+                        <li>みんなの伝えたい言葉を共有し自分に置き換えることで、新たな思いのきっかきに。</li>
+                        <br>
+                        <li>あの時、言えなかった思いを言葉に綴ることで、たとえ直接伝えることが出来なくても前向きに心が変化するきっかけに。</li>
+                        <br>
+                        <li>普段、思っていても伝えていない思いを言葉に綴ることで、気持ちを再確認でき、直接伝えるきっかけに。</li>
+                    </ul>            
+                    <br>
+                    <br>
+                    <h4>ココロの想いを言葉に自己完結型の匿名掲示板サービス</h4>
+                </div>
+                    <br>
             </div>
         </div>
+            <br>
+            <br>
+            <div class="start_btn">
+                <a href="/register" class="btn-square-shadow"> はじめる </a>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            
+
+            <!-- <img class="home_img" src="../static/img/スライド１.png"  alt="大切にしたい想い。あなたの想いを言葉にしてつづりませんか">
+            <img class="home_img" src="../static/img/スライド2.png"  alt="大切にしたい想い。世の中にほんのちょっとのきっかけを">
+            <img class="home_img" src="../static/img/スライド3.png"  alt="きっかけとは"> -->
     </div>
 {% endblock %}

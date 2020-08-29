@@ -4,32 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../static/favicon.ico">
-    <link rel="stylesheet" href="../static/CSS/kikkake.css">
-    <link rel="stylesheet" href="../static/CSS/kikkake_sp.css">
+    <link rel="stylesheet" type="text/css" media="screen and ( min-width:769px )" href="../static/CSS/kikkake.css">
+    <link rel="stylesheet" type="text/css" media="screen and ( max-width:768px )" href="../static/CSS/kikkake_sp.css">
     <link href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
     <title>KIKKAKE</title>
 </head>
 <body>
     <!-- <h1>ここがヘッダーだよ！</h1> -->
     <header>
-        <div class="container">
+        <div class="header_inner">
             <div class="header_left">
-                <img src="../static/img/イイネ.png">
-                <a href="http://" class="header_logo_link">KIKKAKE</a>
-                <p class="header_logo_title">～ 伝えたいことば ～</p>
+                <h1 ><span class="header_title1">K</span><span class="header_title2">IKKAKE</span></h1>
+                <p class="header_logo_title">～ 届けよう。そのキモチ。みんなの匿名掲示板 ～</p>
             </div>
 
-            <div class="header_right">
+            <div id="header_right">
                 <div class="header_home">
-                    <a href="#" class="btn home"><span class="fas fa-home"></span></a>
+                    <a href="/bbs" class="btn home"><span class="fas fa-home"></span></a>
                 </div>
-
                 <div class="header_search">
-                    <div class="nav_bar_left"></div>
-                    <form action="#" class="nav_searchbar" method="get" name="site_search" role="search"></form>
+                    <div class="Box">
+                        <input type="search" class="Box-SearchInput" name="" value="" placeholder="キーワードを入力">
+                        <button type="submit" class="Box-Btn" name=""><img src="../static/img/虫眼鏡.png" class="Box-Btn-Icon" alt=""></button>
+                    </div>
                 </div>
 
-                <div id="header_btn">
+                <!-- ハンバーガーメニュー -->
+                <div id="nav-drawer">
+                    <input id="nav-input" type="checkbox" class="nav-unshown">
+                    <label id="nav-open" for="nav-input"><span></span></label>
+                    <label class="nav-unshown" id="nav-close" for="nav-input"></label>
+                    <div id="nav-content">
+                        <br>
+                        <h1>カテゴリー</h1>
+                        <br>
+                        <div class="ham_categories">
+                            <p>
+                                <ul class="cat_item">
+                                    <li class="cat_item_1">
+                                        <img src="../static/img/今日の気づき（電球）.png" class="cat_item_1 cat_img cat">
+                                        <a class="cat" href="/page_1">今日の気づき</a>
+                                    </li>
+                                    <li class="cat_item_2">
+                                        <img src="../static/img/後悔・失敗（・・・）.png" class="cat_item_2 cat_img cat">
+                                        <a class="cat" href="/page_2">後悔・失敗</a>
+                                    </li>
+                                    <li class="cat_item_3">
+                                        <img src="../static/img/謝罪　しずく.png" class="cat_item_3 cat_img cat">
+                                        <a class="cat" href="/page_3">謝罪</a>
+                                    </li>
+                                    <li class="cat_item_4">
+                                        <img src="../static/img/感謝（いいね、ハート）.png" class="cat_item_4 cat_img cat">
+                                        <a class="cat" href="/page_4">感謝</a>
+                                    </li>
+                                </ul>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header_btn">
                     <a href="#" class="btn twitter"><span class="fab fa-twitter-square"></span></a>
                 </div>
             </div>
@@ -41,12 +77,12 @@
     {% endblock %}
     <!-- <h2>ここがフッターだよ！</h2> -->
     <footer>
-        <div class="container">
+        <div>
             <p class="footer_text">お問い合わせはこちらから</p>
-            <div id="footer_btn">
-                <a href="#" class="btn twitter"><span class="fab fa-twitter-square"></span></a>
-            </div>
-            <p>Copyright © KIKKAKE. All Rights Reserved.</p>
+                <div id="footer_btn">
+                    <a href="#" class="btn twitter"><span class="fab fa-twitter-square"></span></a>
+                </div>
+            <p class="copyright">Copyright © KIKKAKE. All Rights Reserved.</p>
         </div>
     </footer>
 </body>

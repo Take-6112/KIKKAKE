@@ -1,26 +1,73 @@
-<!DOCTYPE html>
-<html lang="jp">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KIKKAKE</title>
-
-</head>
-<body> 
-    <div class="main_wrapper">
-        <div class="container">
-            <h1 class="text_title">KIKKAKEについて</h1>
-            <p class="text_contents">あああああああああああああああああああああああああああああああああああああああ</p>
-        </div>
-        <div class="container">
-            <h1 class="text_title">VISION ～私達が実現したい未来～</h1>
-            <p class="text_contents">あああああああああああああああああああああああああああああああああああああああ</p>
-        </div>
-        <div class="container">
-            <h1 class="text_title">VALUE 私達の価値観</h1>
-            <p class="text_contents">あああああああああああああああああああああああああああああああああああああああ</p>
+{% extends 'base.html' %}
+{% block main %}
+<div class="main_wrapper">
+    <div class="container">
+        <div class="main">
+            <div class="main_inner">
+                <video controls autoplay muted loop playsinline width="90%">
+                    <source src="../static/KIKKAKEプレゼンスライド.mp4"> 
+                </video> 
+                <h1 class="concept_h1">KIKAKEの存在意義は？</h1>
+                <h1>　・既存のお悩み相談掲示板、知恵袋、twitterなどSNSとの違いは？</h1>
+                <p>　　・コメント機能がない  →他人の意見・否定・誹謗中傷を避ける。それは求めない。ちょっと聞いて欲しいだけ。言いたいだけ</p>
+                <br>
+                <h1>　・横の繋がり、広がりがない（フォロー・フォロワーなど）</h1>
+                <p>　　伝えたい。でも関係ある人には知られたくない。でも知らない誰かの承認あると嬉しいな（共感スタンプ）</p>
+                <br>            
+                <h1>　・個人ID、名前が表示されない</h1>
+                <p>　　→例え匿名アカウントであっても、横の繋がりがあると人格ができてしまい、本音のつぶやきを躊躇してしまう（困難）。個人の一方通行で完結するサービス</p>
+                <br>            
+                <h1>　・でも個人で完結するなら意味あるの？</h1>
+                <p>　　・ココロで思っていることを文字に綴ることで気持ちが整理され自分の考えが明確になる。</p>
+                <p>　　・胸が詰まる感情を外に吐き出すことによってほっとしたりするかも？</p>
+                <p>　　・前向きになれそう。ちゃんと直接伝えよう！って行動の背中押してくれるかも。</p>
+                <p>　　ほんのちょっとのきっかけを。</p>   
+                <br>            
+                <h1>　・なら日記でいいじゃん！</h1>
+                <p>　　・例え反応がなくても世界の知らない誰かに発信することで何かちょっと違う気がする</p>
+                <p>　　知らない誰かとの交換日記だったり文通だったりみたいな</p>
+                <br> 
+                <h1>　・ブログじゃ駄目なの？</h1>
+                <p>　　・でもちょっと承認は欲しいのー</p>   
+                <p>　　・でも嫌なコメント来たら落ち込む、悲しい、凹むよー</p>  
+                <p>　　・頑張ったね！辛かったね。わかるよ！など共感があったら勇気がもらえるかもー</p>
+                <p>　　・ブログだと閲覧者から見てひとりの人格ができちゃう。過去の投稿との矛盾があったら</p>
+                <p>　　言いたいこと言えなくなるし。こっちも毎回コメントくれる人を認識しちゃうから</p>
+                <p>　　これ言ったら嫌われるかなとかいろいろ考えちゃうかも</p>
+                <p>　　コメント返すのも疲れちゃう。</p>
+                <br> 
+            </div>
+            <div class="start_btn">
+                <a href="/bbs" id="concept_btn">書いてみる</a>
+            </div>
         </div>
     </div>
-    
-</body>
-</html>
+    <div class="side">
+         <div class="side_inner">
+            <div class="category">
+                <h4 class="side_title">
+                    <span class="side_title_inner">カテゴリー</span>
+                </h4>
+                <ul class="cat_item">
+                    <li class="cat_item_1">
+                        <img src="../static/img/今日の気づき（電球）.png" class="cat_item_1 cat_img cat">
+                        <a class="cat" href="/page_1">今日の気づき</a>
+                    </li>
+                    <li class="cat_item_2">
+                        <img src="../static/img/後悔・失敗（・・・）.png" class="cat_item_2 cat_img cat">
+                        <a class="cat" href="/page_2">後悔・失敗</a>
+                    </li>
+                    <li class="cat_item_3">
+                        <img src="../static/img/謝罪　しずく.png" class="cat_item_3 cat_img cat">
+                        <a class="cat" href="/page_3">謝罪</a>
+                    </li>
+                    <li class="cat_item_4">
+                        <img src="../static/img/感謝（いいね、ハート）.png" class="cat_item_4 cat_img cat">
+                        <a class="cat" href="/page_4">感謝</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
