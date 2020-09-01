@@ -111,6 +111,9 @@ header {
 	height: 35px;
 	width: 35px;
   }
+.cat_item{
+	text-align: left;
+}
   /*チェックが入ったらもろもろ表示*/
   #nav-input:checked ~ #nav-close {
 	display: block;/*カバーを表示*/
@@ -121,6 +124,10 @@ header {
 	-webkit-transform: translateX(0%);
 	transform: translateX(0%);/*中身を表示（右へスライド）*/
 	box-shadow: 6px 0 25px rgba(0,0,0,.15);
+  }
+  #nav-content {
+	  display:flex;
+	  justify-content: center;
   }
 /*ここまでがハンバーガーメニュー*/
 
@@ -135,9 +142,9 @@ header {
 	padding: 10px;
 	background: #fdd35c;
   }
-  .header_inner{
+  /* .header_inner{
 	  width:100%;
-  }
+  } */
 
   .header_title1{
 	color: rgb(255,135,0);
@@ -271,7 +278,7 @@ header {
 	}
 	
 	textarea {
-		width: 100%;
+		width: 80%;
 	}
 	
 	.btn-square-shadow {
@@ -291,6 +298,10 @@ header {
 		border-bottom: none;
 	}
 	
+.side{
+	display:none;
+}
+
 footer {
 	text-align: center;
     height: 100px;
