@@ -9,10 +9,10 @@
                     <p>（※投稿には表示されません）</p>
                 </div>
                 <br>
-                <form action="/register" method="post">
-                ニックネーム：<input type="text" name="name"><br>
+                <form id = "reg" name = "reg" action="/reg" method="post" onsubmit="return check()">
+                ニックネーム：<input id="name" type="text" name="name"><br>
                 <br>
-                パスワード：<input type="password" name="password"><br>
+                パスワード：<input id="password" type="password" name="password"><br>
                 <br>
                 <input type="submit" name="save" value="登録">
                 </form>
@@ -64,5 +64,6 @@
                 </ul>
         </div>
     </div>
-</div>     
+</div>
+<script type="text/javascript" src="{{url_for('static',filename='js/common.js')}}" defer="defer"></script>
 {% endblock %}
