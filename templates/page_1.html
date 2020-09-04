@@ -3,10 +3,10 @@
 <!-- ここから下に中身を書くよ！！ -->
 <div class="main_wrapper">
     <div class="container">
-        <div  id= "contentbox" class="main">
+        <div  class="main">
             <h1>今日の気づき</h1>
             {% for item in comment_list %}
-            <div id= "borderbox" class="page_1_content">
+            <div class="page_1_content">
                 <p>{{item["comment"]}}</p>
                 <p>投稿時間:{{item["time"]}}</p>
                 <div id="fb-root"></div>
