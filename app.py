@@ -1,6 +1,6 @@
 # Flaskからimportしてflaskを使えるようにする
-from flask import Flask, render_template, request, redirect, session, json, jsonify
-import sqlite3
+from flask import Flask, render_template, request, redirect, session, json, jsonify ,url_for
+import os , psycopg2
 
 #appっていう名前でFlaskアプリをつくっていくよ～みたいな
 app = Flask(__name__)
@@ -9,6 +9,13 @@ app = Flask(__name__)
 app.secret_key = "08smmon28"
 
 from datetime import datetime
+
+# connect postgreSQL
+# users = 'nadomsygphsxdl' # initial user
+# dbnames = 'd6d33hl9ajh3pq'
+# passwords = '286fb5dce39fb1dd2d3d143984ed445c110796d09a65f96a2f3810a5385f646d'
+# host = 'ec2-50-16-221-180.compute-1.amazonaws.com'
+# port = '5432'
 
 @app.route('/')
 def index():
@@ -19,42 +26,52 @@ def concept():
     return render_template('concept.html')
 
 #登録しなくてもみんなのKIKKAKEは見れる
-@app.route('/register')
-def all_post():
-    conn = sqlite3.connect('k_post.db')
-    c = conn.cursor()
-    # DBにアクセスして投稿内容を取得する
-    c.execute("select id,comment,time from k_posts where del_flag = 0 order by time desc")
-    all_post = []
-    for row in c.fetchall():
-        all_post.append({"id": row[0], "comment": row[1], "time":row[2]})
-    return render_template('register.html',all_post = all_post)
+# @app.route('/register')
+# def all_post():
+#     users = 'nadomsygphsxdl' # initial user
+#     dbnames = 'd6d33hl9ajh3pq'
+#     passwords = '286fb5dce39fb1dd2d3d143984ed445c110796d09a65f96a2f3810a5385f646d'
+#     host = 'ec2-50-16-221-180.compute-1.amazonaws.com'
+#     port = '5432'
+#     conn = psycopg2.connect(" user=" + users +" dbname=" + dbnames +" password=" + passwords +" host=" + host + " port=" + port) 
+#     c = conn.cursor()
+#     # DBにアクセスして投稿内容を取得する
+#     c.execute("select id,comment,time from k_posts where del_flag = 0 order by time desc")
+#     all_post = []
+#     for row in c.fetchall():
+#         all_post.append({"id": row[0], "comment": row[1], "time":row[2]})
+#     return render_template('register.html',all_post = all_post)
 
 
 # GET  /register => 登録画面を表示
 # POST /register => 登録処理をする
-@app.route('/register',methods=["GET", "POST"])
+@app.route('/register')
 def register():
     #  登録ページを表示させる
-    if request.method == "GET":
-        if 'user_id' in session :
-            return redirect ('/bbs')
-        else:
-            return render_template("register.html")
-
-    # ここからPOSTの処理
+    if 'user_id' in session :
+        return redirect ('/bbs')
     else:
-        # 登録ページで登録ボタンを押した時に走る処理
-        name = request.form.get("name")
-        password = request.form.get("password")
+        return render_template("register.html")
+    
+# ここからPOSTの処理
+@app.route('/reg',methods=["POST"])
+def reg():
+    # 登録ページで登録ボタンを押した時に走る処理
+    name = request.form.get("name")
+    password = request.form.get("password")
 
-        conn = sqlite3.connect('k_post.db')
-        c = conn.cursor()
-        # 課題4の答えはここ
-        c.execute("insert into users values(null,?,?)", (name,password))
-        conn.commit()
-        conn.close()
-        return redirect('/login')
+    users = 'nadomsygphsxdl' # initial user
+    dbnames = 'd6d33hl9ajh3pq'
+    passwords = '286fb5dce39fb1dd2d3d143984ed445c110796d09a65f96a2f3810a5385f646d'
+    host = 'ec2-50-16-221-180.compute-1.amazonaws.com'
+    port = '5432'
+    conn = psycopg2.connect(" user=" + users +" dbname=" + dbnames +" password=" + passwords +" host=" + host + " port=" + port) 
+    c = conn.cursor()
+    # 課題4の答えはここ
+    c.execute("insert into users values(default,'"+ name + "','" + password + "')")
+    conn.commit()
+    conn.close()
+    return redirect('/login')
 
 
 # GET  /login => ログイン画面を表示
@@ -73,9 +90,14 @@ def login():
 
         # ブラウザから送られてきた name ,password を userテーブルに一致するレコードが
         # 存在するかを判定する。レコードが存在するとuser_idに整数が代入、存在しなければ nullが入る
-        conn = sqlite3.connect('k_post.db')
+        users = 'nadomsygphsxdl' # initial user
+        dbnames = 'd6d33hl9ajh3pq'
+        passwords = '286fb5dce39fb1dd2d3d143984ed445c110796d09a65f96a2f3810a5385f646d'
+        host = 'ec2-50-16-221-180.compute-1.amazonaws.com'
+        port = '5432'
+        conn = psycopg2.connect(" user=" + users +" dbname=" + dbnames +" password=" + passwords +" host=" + host + " port=" + port) 
         c = conn.cursor()
-        c.execute("select id from users where name = ? and password = ?", (name, password) )
+        c.execute("select id from users where name = '"+ name + "' and password = '" + password + "'")
         user_id = c.fetchone()
         conn.close()
         # DBから取得してきたuser_id、ここの時点ではタプル型
@@ -99,19 +121,24 @@ def logout():
 @app.route('/bbs')
 def bbs():
     if 'user_id' in session :
-        user_id = session['user_id']
-        conn = sqlite3.connect('k_post.db')
+        user_id = str(session['user_id'])
+        users = 'nadomsygphsxdl' # initial user
+        dbnames = 'd6d33hl9ajh3pq'
+        passwords = '286fb5dce39fb1dd2d3d143984ed445c110796d09a65f96a2f3810a5385f646d'
+        host = 'ec2-50-16-221-180.compute-1.amazonaws.com'
+        port = '5432'
+        conn = psycopg2.connect(" user=" + users +" dbname=" + dbnames +" password=" + passwords +" host=" + host + " port=" + port) 
         c = conn.cursor()
         # # DBにアクセスしてログインしているユーザ名と投稿内容を取得する
         # クッキーから取得したuser_idを使用してusersテーブルのnameを取得
-        c.execute("select name from users where id = ?", (user_id,))
+        c.execute("select name from users where id = '"+ user_id + "'")
         # fetchoneはタプル型
         user_info = c.fetchone()
         # user_infoの中身を確認
 
         # 課題1の答えはここ del_flagが0のものだけ表示する
         # 課題2の答えはここ 保存されているtimeも表示する
-        c.execute("select id,comment,time from k_posts where user_id = ? and del_flag = 0 order by time desc", (user_id,))
+        c.execute("select id,comment,time from k_posts where user_id = '"+ user_id + "' and del_flag = 0 order by time desc")
         comment_list = []
         for row in c.fetchall():
             comment_list.append({"id": row[0], "comment": row[1], "time":row[2]})
@@ -151,17 +178,22 @@ def bbs():
 # @app.route('/bbs')
 # def bbs():
     if 'user_id' in session :
-        user_id = session['user_id']
-        conn = sqlite3.connect('k_post.db')
+        user_id = str(session['user_id'])
+        users = 'nadomsygphsxdl' # initial user
+        dbnames = 'd6d33hl9ajh3pq'
+        passwords = '286fb5dce39fb1dd2d3d143984ed445c110796d09a65f96a2f3810a5385f646d'
+        host = 'ec2-50-16-221-180.compute-1.amazonaws.com'
+        port = '5432'
+        conn = psycopg2.connect(" user=" + users +" dbname=" + dbnames +" password=" + passwords +" host=" + host + " port=" + port) 
         c = conn.cursor()
         # # DBにアクセスしてログインしているユーザ名と投稿内容を取得する
         # クッキーから取得したuser_idを使用してuserテーブルのnameを取得
-        c.execute("select id from user where id = ?", (user_id,))
+        c.execute("select id from user where id =  '"+ user_id + "'")
         # fetchoneはタプル型
         user_info = c.fetchone()
         # user_infoの中身を確認
         # 保存されているtimeも表示する
-        c.execute("select id,content,time from k_posts where userid = ? and del_flag = 0 order by id", (user_id,))
+        c.execute("select id,content,time from k_posts where userid =  '"+ user_id + "' and del_flag = 0 order by id")
         content_list = []
         for row in c.fetchall():
             content_list.append({"id": row[0], "content": row[1], "time":row[2]})
@@ -173,7 +205,7 @@ def bbs():
 
 @app.route('/add', methods=["POST"])
 def add():
-    user_id = session['user_id']
+    user_id = str(session['user_id'])
     # 現在時刻を取得
     time = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
     # POSTアクセスならDBに登録する
@@ -181,13 +213,18 @@ def add():
     comment = request.form.get("comment")
      # チェックボックスから選択されたカテゴリーの取得
     cat_id = request.form.get("cat_id") 
-    conn = sqlite3.connect('k_post.db')
+    users = 'nadomsygphsxdl' # initial user
+    dbnames = 'd6d33hl9ajh3pq'
+    passwords = '286fb5dce39fb1dd2d3d143984ed445c110796d09a65f96a2f3810a5385f646d'
+    host = 'ec2-50-16-221-180.compute-1.amazonaws.com'
+    port = '5432'
+    conn = psycopg2.connect(" user=" + users +" dbname=" + dbnames +" password=" + passwords +" host=" + host + " port=" + port) 
     c = conn.cursor()
     # 現在の最大ID取得(fetchoneの戻り値はタプル)
 
     # null,?,?,0の0はdel_flagのデフォルト値
     # cat_idを新たにinsert
-    c.execute("insert into k_posts values(null,?,?,0,?,?)", (user_id, comment,time,cat_id))
+    c.execute("insert into k_posts values(default, '"+ user_id + "', '"+ comment + "',0,'"+ time + "','"+ cat_id + "')")
     conn.commit()
     conn.close()
     return redirect('/bbs')
@@ -195,9 +232,15 @@ def add():
 @app.route('/edit/<int:id>')
 def edit(id):
     if 'user_id' in session :
-        conn = sqlite3.connect('k_post.db')
+        id = str(id)
+        users = 'nadomsygphsxdl' # initial user
+        dbnames = 'd6d33hl9ajh3pq'
+        passwords = '286fb5dce39fb1dd2d3d143984ed445c110796d09a65f96a2f3810a5385f646d'
+        host = 'ec2-50-16-221-180.compute-1.amazonaws.com'
+        port = '5432'
+        conn = psycopg2.connect(" user=" + users +" dbname=" + dbnames +" password=" + passwords +" host=" + host + " port=" + port) 
         c = conn.cursor()
-        c.execute("select comment from k_posts where id = ?", (id,) )
+        c.execute("select comment from k_posts where id = '"+ id + "'")
         comment = c.fetchone()
         conn.close()
 
@@ -222,13 +265,18 @@ def update_item():
         # ブラウザから送られてきたデータを取得
         item_id = request.args.get("item_id") # id
         print(item_id)
-        item_id = int(item_id) # ブラウザから送られてきたのは文字列なので整数に変換する
+        # item_id = int(item_id) # ブラウザから送られてきたのは文字列なので整数に変換する
         comment = request.args.get("comment") # 編集されたテキストを取得する
         cat_id = request.args.get("cat_id")
         # 既にあるデータベースのデータを送られてきたデータに更新
-        conn = sqlite3.connect('k_post.db')
+        users = 'nadomsygphsxdl' # initial user
+        dbnames = 'd6d33hl9ajh3pq'
+        passwords = '286fb5dce39fb1dd2d3d143984ed445c110796d09a65f96a2f3810a5385f646d'
+        host = 'ec2-50-16-221-180.compute-1.amazonaws.com'
+        port = '5432'
+        conn = psycopg2.connect(" user=" + users +" dbname=" + dbnames +" password=" + passwords +" host=" + host + " port=" + port) 
         c = conn.cursor()
-        c.execute("update k_posts set comment = ?, cat_id = ? where id = ?",(comment,cat_id,item_id))
+        c.execute("update k_posts set comment = '"+ comment + "', cat_id = '"+ cat_id + "' where id = '"+ item_id + "'")
         conn.commit()
         conn.close()
 
@@ -240,12 +288,16 @@ def update_item():
 @app.route('/del' , methods=["POST"])
 def del_task():
     id = request.form.get("comment_id")
-    id = int(id)
-    conn = sqlite3.connect('k_post.db')
+    users = 'nadomsygphsxdl' # initial user
+    dbnames = 'd6d33hl9ajh3pq'
+    passwords = '286fb5dce39fb1dd2d3d143984ed445c110796d09a65f96a2f3810a5385f646d'
+    host = 'ec2-50-16-221-180.compute-1.amazonaws.com'
+    port = '5432'
+    conn = psycopg2.connect(" user=" + users +" dbname=" + dbnames +" password=" + passwords +" host=" + host + " port=" + port) 
     c = conn.cursor()
     # 指定されたitem_idを元にDBデータを削除せずにdel_flagを1にして一覧からは表示しないようにする
     # 課題1の答えはここ del_flagを1にupdateする
-    c.execute("update k_posts set del_flag = 1 where id=?", (id,))
+    c.execute("update k_posts set del_flag = 1 where id='" + id +"'")
     conn.commit()
     conn.close()
     # 処理終了後に一覧画面に戻す
@@ -254,8 +306,12 @@ def del_task():
 # page_1カテゴリーに飛ぶ
 @app.route('/page_1')
 def page_1():
-    
-    conn = sqlite3.connect('k_post.db')
+    users = 'nadomsygphsxdl' # initial user
+    dbnames = 'd6d33hl9ajh3pq'
+    passwords = '286fb5dce39fb1dd2d3d143984ed445c110796d09a65f96a2f3810a5385f646d'
+    host = 'ec2-50-16-221-180.compute-1.amazonaws.com'
+    port = '5432'
+    conn = psycopg2.connect(" user=" + users +" dbname=" + dbnames +" password=" + passwords +" host=" + host + " port=" + port) 
     c = conn.cursor()
     
     c.execute("select id, comment, time from k_posts where cat_id = 1 order by time desc")
@@ -269,8 +325,12 @@ def page_1():
 # page_2カテゴリーに飛ぶ
 @app.route('/page_2')
 def page_2():
-    
-    conn = sqlite3.connect('k_post.db')
+    users = 'nadomsygphsxdl' # initial user
+    dbnames = 'd6d33hl9ajh3pq'
+    passwords = '286fb5dce39fb1dd2d3d143984ed445c110796d09a65f96a2f3810a5385f646d'
+    host = 'ec2-50-16-221-180.compute-1.amazonaws.com'
+    port = '5432'
+    conn = psycopg2.connect(" user=" + users +" dbname=" + dbnames +" password=" + passwords +" host=" + host + " port=" + port) 
     c = conn.cursor()
     
     c.execute("select id, comment, time from k_posts where cat_id = 2 order by time desc")
@@ -284,8 +344,12 @@ def page_2():
 # page_3カテゴリーに飛ぶ
 @app.route('/page_3')
 def page_3():
-    
-    conn = sqlite3.connect('k_post.db')
+    users = 'nadomsygphsxdl' # initial user
+    dbnames = 'd6d33hl9ajh3pq'
+    passwords = '286fb5dce39fb1dd2d3d143984ed445c110796d09a65f96a2f3810a5385f646d'
+    host = 'ec2-50-16-221-180.compute-1.amazonaws.com'
+    port = '5432'
+    conn = psycopg2.connect(" user=" + users +" dbname=" + dbnames +" password=" + passwords +" host=" + host + " port=" + port) 
     c = conn.cursor()
     
     c.execute("select id, comment, time from k_posts where cat_id = 3 order by time desc")
@@ -299,8 +363,12 @@ def page_3():
 # page_4カテゴリーに飛ぶ
 @app.route('/page_4')
 def page_4():
-    
-    conn = sqlite3.connect('k_post.db')
+    users = 'nadomsygphsxdl' # initial user
+    dbnames = 'd6d33hl9ajh3pq'
+    passwords = '286fb5dce39fb1dd2d3d143984ed445c110796d09a65f96a2f3810a5385f646d'
+    host = 'ec2-50-16-221-180.compute-1.amazonaws.com'
+    port = '5432'
+    conn = psycopg2.connect(" user=" + users +" dbname=" + dbnames +" password=" + passwords +" host=" + host + " port=" + port) 
     c = conn.cursor()
     
     c.execute("select id, comment, time from k_posts where cat_id = 4 order by time desc")
@@ -310,6 +378,19 @@ def page_4():
     c.close()
     return render_template('page_4.html' , comment_list = comment_list)
 
+# css読み込み用コード
+@app.context_processor
+def override_url_for():
+    return dict(url_for=dated_url_for)
+
+def dated_url_for(endpoint, **values):
+    if endpoint == 'static':
+        filename = values.get('filename', None)
+        if filename:
+            file_path = os.path.join(app.root_path,
+                                 endpoint, filename)
+            values['q'] = int(os.stat(file_path).st_mtime)
+    return url_for(endpoint, **values)
 
 @app.errorhandler(403)
 def mistake403(code):
