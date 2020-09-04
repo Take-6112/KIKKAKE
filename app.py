@@ -177,31 +177,31 @@ def bbs():
 
 # @app.route('/bbs')
 # def bbs():
-    if 'user_id' in session :
-        user_id = str(session['user_id'])
-        users = 'nadomsygphsxdl' # initial user
-        dbnames = 'd6d33hl9ajh3pq'
-        passwords = '286fb5dce39fb1dd2d3d143984ed445c110796d09a65f96a2f3810a5385f646d'
-        host = 'ec2-50-16-221-180.compute-1.amazonaws.com'
-        port = '5432'
-        conn = psycopg2.connect(" user=" + users +" dbname=" + dbnames +" password=" + passwords +" host=" + host + " port=" + port) 
-        c = conn.cursor()
-        # # DBにアクセスしてログインしているユーザ名と投稿内容を取得する
-        # クッキーから取得したuser_idを使用してuserテーブルのnameを取得
-        c.execute("select id from user where id =  '"+ user_id + "'")
-        # fetchoneはタプル型
-        user_info = c.fetchone()
-        # user_infoの中身を確認
-        # 保存されているtimeも表示する
-        c.execute("select id,content,time from k_posts where userid =  '"+ user_id + "' and del_flag = 0 order by id")
-        content_list = []
-        for row in c.fetchall():
-            content_list.append({"id": row[0], "content": row[1], "time":row[2]})
+    # if 'user_id' in session :
+    #     user_id = str(session['user_id'])
+    #     users = 'nadomsygphsxdl' # initial user
+    #     dbnames = 'd6d33hl9ajh3pq'
+    #     passwords = '286fb5dce39fb1dd2d3d143984ed445c110796d09a65f96a2f3810a5385f646d'
+    #     host = 'ec2-50-16-221-180.compute-1.amazonaws.com'
+    #     port = '5432'
+    #     conn = psycopg2.connect(" user=" + users +" dbname=" + dbnames +" password=" + passwords +" host=" + host + " port=" + port) 
+    #     c = conn.cursor()
+    #     # # DBにアクセスしてログインしているユーザ名と投稿内容を取得する
+    #     # クッキーから取得したuser_idを使用してuserテーブルのnameを取得
+    #     c.execute("select id from user where id =  '"+ user_id + "'")
+    #     # fetchoneはタプル型
+    #     user_info = c.fetchone()
+    #     # user_infoの中身を確認
+    #     # 保存されているtimeも表示する
+    #     c.execute("select id,content,time from k_posts where userid =  '"+ user_id + "' and del_flag = 0 order by id")
+    #     content_list = []
+    #     for row in c.fetchall():
+    #         content_list.append({"id": row[0], "content": row[1], "time":row[2]})
 
-        c.close()
-        return render_template('bbs.html' , user_info = user_info , content_list = content_list)
-    else:
-        return redirect("/login")
+    #     c.close()
+    #     return render_template('bbs.html' , user_info = user_info , content_list = content_list)
+    # else:
+    #     return redirect("/login")
 
 @app.route('/add', methods=["POST"])
 def add():
@@ -403,4 +403,4 @@ def notfound(code):
 
 if __name__ == "__main__":
     # Flask が持っている開発用サーバーを、実行します。
-    app.run(debug=True)
+    app.run()
